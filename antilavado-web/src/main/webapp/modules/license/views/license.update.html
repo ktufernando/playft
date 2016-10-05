@@ -1,0 +1,130 @@
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Licencia</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Informaci&oacute;n de la Licencia
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <label>Organizaci&oacute;n:</label>
+                                        </td>
+                                        <td>
+                                            <span>{{license.organization}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Fecha de Compra:</label>
+                                        </td>
+                                        <td>
+                                            <span>{{license.datePurchased}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Tipo de Licencia:</label>
+                                        </td>
+                                        <td>
+                                            <span>{{license.licenseType}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Limite de Usuarios:</label>
+                                        </td>
+                                        <td>
+                                            <span>{{license.userLimit}} ({{license.activeUsers}} actualmente activos)</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Fecha de Compra:</label>
+                                        </td>
+                                        <td>
+                                            <span>{{license.datePurchased}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Mantenimiento:</label>
+                                        </td>
+                                        <td>
+                                            <span>{{license.maintenancePeriod}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Vencimiento:</label>
+                                        </td>
+                                        <td>
+                                            <span>{{license.licenseExpiration}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Actualizaci&oacute;n de Licencia
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form" name="licenseUpdateForm" id="licenseUpdateForm" data-ng-submit="updateLicense()" autocomplete="off" novalidate>
+
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="form-group col-sm-12" ng-class="{'has-error' : licenseUpdateForm.submitted && licenseUpdateForm.license.$invalid}">
+                                            <label for="license" class="control-label">Copiar y pegar la clave de la licencia a continuaci&oacute;n.</label>
+                                            <textarea class="form-control"  placeholder="Ingrese la licencia" type="text" autofocus
+                                                      rows="6"
+                                                      name="license" id="license"
+                                                      data-ng-model="licenseRequest.licenseString"
+                                                      ng-required="true"></textarea>
+                                            <ng-messages ng-show="licenseUpdateForm.submitted" for="licenseUpdateForm.license.$error">
+                                                <ng-message when="required"><label class="control-label" for="license">Valor requerido</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                            <button type="submit" class="btn btn-primary" ng-click="licenseUpdateForm.submitted = true" ng-disabled="licenseUpdateForm.submitDisabled">
+                                                <i class="fa fa-arrow-right"></i>&nbsp;Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /#page-wrapper -->

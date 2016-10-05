@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ar.com.jf.antilavado</groupId>
+    <artifactId>antilavado-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.5.RELEASE</version>
+    </parent>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <auth.encryption.enabled>true</auth.encryption.enabled>
+                <auth.encryption.seed>%DU)FöfI8/°</auth.encryption.seed>
+                <auth.session.maxAge>24h</auth.session.maxAge>
+
+                <db.selected>mysql</db.selected>
+				<db.initialSize>2</db.initialSize>
+                <db.maxActive>5</db.maxActive>
+				
+				<!-- ORACLE -->
+                <db.oracle.driver>oracle.jdbc.driver.OracleDriver</db.oracle.driver>
+                <db.oracle.url>jdbc:oracle:thin:@10.12.12.165:1521:XE</db.oracle.url>
+                <db.oracle.username></db.oracle.username>
+                <db.oracle.password></db.oracle.password>
+				
+				<!-- SQLSERVER -->
+                <db.sqlserver.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</db.sqlserver.driver>
+                <db.sqlserver.url>jdbc:sqlserver://10.12.12.9:1433;databaseName=Antilavado;sendStringParametersAsUnicode=false</db.sqlserver.url>
+                <db.sqlserver.username></db.sqlserver.username>
+                <db.sqlserver.password></db.sqlserver.password>
+				
+				<!-- MYSQL -->
+                <db.mysql.driver>com.mysql.jdbc.Driver</db.mysql.driver>
+				<db.mysql.url>jdbc:mysql://localhost:3306/playft</db.mysql.url>
+                <db.mysql.username>playft-usr</db.mysql.username>
+                <db.mysql.password>playft1234</db.mysql.password>
+				
+                <hibernate.oracle.dialect>org.hibernate.dialect.Oracle10gDialect</hibernate.oracle.dialect>
+                <hibernate.sqlserver.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.sqlserver.dialect>
+                <hibernate.mysql.dialect>org.hibernate.dialect.MySQLDialect</hibernate.mysql.dialect>
+                <hibernate.show_sql>true</hibernate.show_sql>
+                <hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
+                <entitymanager.packagesToScan>ar.com.jf.antilavado.repository.model</entitymanager.packagesToScan>
+
+                <ftp.host>localhost</ftp.host>
+                <ftp.port>22</ftp.port>
+                <ftp.username>playft</ftp.username>
+                <ftp.password>playft</ftp.password>
+                <ftp.handbook.path>/handbooks/</ftp.handbook.path>
+                <ftp.transactions.registration.path>/transactions/</ftp.transactions.registration.path>
+                <ftp.transactions.result.path>/transactions/results/</ftp.transactions.result.path>
+                <ftp.client.files.path>/digital_files/</ftp.client.files.path>
+
+                <log4j.path>C:/logs/</log4j.path>
+
+                <!-- Diario: 0 59 23 ? * * -->
+                <!-- Semanal: 0 59 23 ? * SUN -->
+                <!-- Mensual: 0 59 23 L * ?-->
+                <alerts.process.time>0 18 19 ? * *</alerts.process.time>
+
+                <!-- Diario: DAILY -->
+                <!-- Semanal: WEEKLY -->
+                <!-- Mensual: MONTHLY -->
+                <alerts.process.frequency>WEEKLY</alerts.process.frequency>
+            </properties>
+        </profile>
+		<profile>
+            <id>dev</id>
+            <properties>
+                <auth.encryption.enabled>true</auth.encryption.enabled>
+                <auth.encryption.seed>%DU)FöfI8/°</auth.encryption.seed>
+                <auth.session.maxAge>24h</auth.session.maxAge>
+
+                <db.selected>mysql</db.selected>
+                <db.initialSize>2</db.initialSize>
+                <db.maxActive>5</db.maxActive>
+
+                <!-- ORACLE -->
+                <db.oracle.driver></db.oracle.driver>
+                <db.oracle.url></db.oracle.url>
+                <db.oracle.username></db.oracle.username>
+                <db.oracle.password></db.oracle.password>
+
+                <!-- SQLSERVER -->
+                <db.sqlserver.driver></db.sqlserver.driver>
+                <db.sqlserver.url></db.sqlserver.url>
+                <db.sqlserver.username></db.sqlserver.username>
+                <db.sqlserver.password></db.sqlserver.password>
+
+                <!-- MYSQL -->
+                <db.mysql.driver>com.mysql.jdbc.Driver</db.mysql.driver>
+                <db.mysql.url>jdbc:mysql://mitwdora01:3306/playft</db.mysql.url>
+                <db.mysql.username>playft-usr</db.mysql.username>
+                <db.mysql.password>playft1234</db.mysql.password>
+
+                <hibernate.oracle.dialect>org.hibernate.dialect.Oracle10gDialect</hibernate.oracle.dialect>
+                <hibernate.sqlserver.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.sqlserver.dialect>
+                <hibernate.mysql.dialect>org.hibernate.dialect.MySQLDialect</hibernate.mysql.dialect>
+                <hibernate.show_sql>true</hibernate.show_sql>
+                <hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
+                <entitymanager.packagesToScan>ar.com.jf.antilavado.repository.model</entitymanager.packagesToScan>
+
+                <ftp.host>mitwdora01</ftp.host>
+                <ftp.port>22</ftp.port>
+                <ftp.username>playft</ftp.username>
+                <ftp.password>playft</ftp.password>
+                <ftp.handbook.path>/handbooks/</ftp.handbook.path>
+                <ftp.transactions.registration.path>/transactions/</ftp.transactions.registration.path>
+                <ftp.transactions.result.path>/transactions_results/</ftp.transactions.result.path>
+                <ftp.client.files.path>/digital_files/</ftp.client.files.path>
+
+                <log4j.path>C:/PLAYFT/JAVA/apache-tomcat-8.0.30/logs/</log4j.path>
+
+                <alerts.process.time>0 18 19 ? * *</alerts.process.time>
+                <alerts.process.frequency>WEEKLY</alerts.process.frequency>
+            </properties>
+        </profile>
+		<profile>
+            <id>openshift</id>
+            <properties>
+                <auth.encryption.enabled>true</auth.encryption.enabled>
+                <auth.encryption.seed>%DU)FöfI8/°</auth.encryption.seed>
+                <auth.session.maxAge>24h</auth.session.maxAge>
+
+                <db.selected>mysql</db.selected>
+                <db.initialSize>2</db.initialSize>
+                <db.maxActive>5</db.maxActive>
+
+                <!-- ORACLE -->
+                <db.oracle.driver></db.oracle.driver>
+                <db.oracle.url></db.oracle.url>
+                <db.oracle.username></db.oracle.username>
+                <db.oracle.password></db.oracle.password>
+
+                <!-- SQLSERVER -->
+                <db.sqlserver.driver></db.sqlserver.driver>
+                <db.sqlserver.url></db.sqlserver.url>
+                <db.sqlserver.username></db.sqlserver.username>
+                <db.sqlserver.password></db.sqlserver.password>
+
+                <!-- MYSQL -->
+                <db.mysql.driver>com.mysql.jdbc.Driver</db.mysql.driver>
+                <db.mysql.url>jdbc:mysql://127.6.229.2:3306/tomcat8</db.mysql.url>
+                <!--<db.mysql.url>jdbc:mysql://localhost:3307/tomcat8</db.mysql.url>-->
+                <db.mysql.username>adminrbTMGKP</db.mysql.username>
+                <db.mysql.password>cLTJ78cdHNk7</db.mysql.password>
+
+                <hibernate.oracle.dialect></hibernate.oracle.dialect>
+                <hibernate.sqlserver.dialect></hibernate.sqlserver.dialect>
+                <hibernate.mysql.dialect>org.hibernate.dialect.MySQLDialect</hibernate.mysql.dialect>
+                <hibernate.show_sql>true</hibernate.show_sql>
+                <hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
+                <entitymanager.packagesToScan>ar.com.jf.antilavado.repository.model</entitymanager.packagesToScan>
+
+                <ftp.host>fvaldes.com.ar</ftp.host>
+                <ftp.port>22</ftp.port>
+                <ftp.username>playft</ftp.username>
+                <ftp.password>playft</ftp.password>
+                <ftp.handbook.path>/handbooks/</ftp.handbook.path>
+                <ftp.transactions.registration.path>/transactions/</ftp.transactions.registration.path>
+                <ftp.transactions.result.path>/transactions/results/</ftp.transactions.result.path>
+                <ftp.client.files.path>/digital_files/</ftp.client.files.path>
+
+                <log4j.path>/var/lib/openshift/56fae0e97628e1059c00018d/app-root/data/tomcat8/logs/</log4j.path>
+
+                <alerts.process.time>0 59 23 ? * SUN</alerts.process.time>
+                <alerts.process.frequency>WEEKLY</alerts.process.frequency>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.36</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc41</artifactId>
+            <version>4.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc14</artifactId>
+            <version>10.2.0.3.0</version>
+            <scope>provided</scope>
+        </dependency-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jul-to-slf4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+			<exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-web</artifactId>
+                <version>${springframework.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-ehcache</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-envers</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>${commons.dbcp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons.lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons.collections.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons.fileupload.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda.time.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time-hibernate</artifactId>
+                <version>${joda-time-hibernate.version}</version>
+            </dependency>
+			
+			<dependency>
+                <groupId>org.jadira.usertype</groupId>
+                <artifactId>usertype.core</artifactId>
+                <version>${jadira.usertype}</version>
+            </dependency>
+            
+            <!-- Logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjtools</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+			
+			<dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-hppc</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-joda</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-json-org</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.sf.jasperreports</groupId>
+                <artifactId>jasperreports</artifactId>
+                <version>${jasperreports.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>xml-apis</groupId>
+                        <artifactId>xml-apis</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jcraft</groupId>
+                <artifactId>jsch</artifactId>
+                <version>${jsch.version}</version>
+            </dependency>
+
+            <!-- License -->
+            <dependency>
+                <groupId>net.nicholaswilliams.java.licensing</groupId>
+                <artifactId>licensing-core</artifactId>
+                <version>${licensing-core.version}</version>
+            </dependency>
+
+            <!-- Testing -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>hamcrest-core</artifactId>
+                        <groupId>org.hamcrest</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-all</artifactId>
+                <version>1.3</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>1.9.5</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.jayway.jsonpath</groupId>
+                <artifactId>json-path</artifactId>
+                <version>0.8.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.jayway.jsonpath</groupId>
+                <artifactId>json-path-assert</artifactId>
+                <version>0.8.1</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>2.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.2</version>
+            </plugin>
+        </plugins>
+    </build>
+    <properties>
+        <!-- encoding -->
+        <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>ISO-8859-1</project.reporting.outputEncoding>
+        <!-- versions -->
+        <junit.version>4.11</junit.version>
+        <guava.version>16.0</guava.version>
+        <commons.dbcp.version>1.4</commons.dbcp.version>
+        <commons.lang3.version>3.3.2</commons.lang3.version>
+        <commons.collections.version>3.2.1</commons.collections.version>
+        <commons.fileupload.version>1.3.1</commons.fileupload.version>
+        <aspectj.version>1.7.4</aspectj.version>
+        <springframework.version>4.1.6.RELEASE</springframework.version>
+        <springframework.security.version>3.2.6.RELEASE</springframework.security.version>
+        <joda.time.version>2.7</joda.time.version>
+        <slf4j.version>1.7.5</slf4j.version>
+        <jackson.version>2.5.4</jackson.version>
+        <hibernate.version>4.3.2.Final</hibernate.version>
+        <joda-time-hibernate.version>1.3</joda-time-hibernate.version>
+        <jadira.usertype>3.2.0.GA</jadira.usertype>
+        <sqlserver.version>4.1</sqlserver.version>
+		<gson.version>2.3.1</gson.version>
+		<jsch.version>0.1.53</jsch.version>
+        <licensing-core.version>1.1.0</licensing-core.version>
+    </properties>
+    <modules>
+        <module>antilavado-repository</module>
+        <module>antilavado-service</module>
+        <module>antilavado-security</module>
+        <module>antilavado-rest</module>
+        <module>antilavado-web</module>
+    </modules>
+</project>

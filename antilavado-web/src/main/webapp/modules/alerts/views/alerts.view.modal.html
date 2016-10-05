@@ -1,0 +1,90 @@
+<div class="panel-info">
+    <div class="modal-header panel-heading">
+        <h3 class="modal-title panel-title">
+            <i class="fa" ng-class="fa-info"></i>&nbsp;Alerta: {{message.id}}
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Cliente: </label>
+            </div>
+            <div class="col-lg-3">
+            <span data-ng-if="message.clientIsIndividual">
+                {{message.clientNames}} {{message.clientLastNames}}
+            </span>
+            <span data-ng-if="!message.clientIsIndividual">
+                {{message.clientBusinessName}}
+            </span>
+            </div>
+            <div class="col-lg-3">
+                <label>Periodo: </label>
+            </div>
+            <div class="col-lg-3">
+                {{message.periodDescription}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Estimaci&oacute;n L&iacute;mite: </label>
+            </div>
+            <div class="col-lg-3">
+                $ {{message.estimatedIncome | number:2}}
+            </div>
+            <div class="col-lg-3">
+                <label>Monto Recaudado: </label>
+            </div>
+            <div class="col-lg-3">
+                $ {{message.periodAmount | number:2}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Diferencia: </label>
+            </div>
+            <div class="col-lg-3">
+                $ {{message.difference | number:2}}
+            </div>
+            <div data-ng-if="message.userFirstName">
+                <div class="col-lg-3">
+                    <label>Usuario Asignado: </label>
+                </div>
+                <div class="col-lg-3">
+                    {{message.userFirstName}} {{message.userLastName}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Operaci&oacute;n Inusual: </label>
+            </div>
+            <div class="col-lg-3">
+                {{message.unusualOperation}}
+            </div>
+            <div data-ng-if="message.uifReport">
+                <div class="col-lg-3">
+                    <label>Reporte UIF: </label>
+                </div>
+                <div class="col-lg-3">
+                    {{message.uifReport | date:'dd/MM/yyyy'}}
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div data-ng-if="message.monitoring">
+                <div class="col-lg-12">
+                    <label>Informe de Seguimiento: </label>
+                </div>
+                <div class="col-lg-12">
+                    {{message.monitoring}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default btn-sm" type="button" ng-click="cancel()">
+            <i class="fa fa-sign-out"></i>&nbsp;Cerrar
+        </button>
+    </div>
+</div>

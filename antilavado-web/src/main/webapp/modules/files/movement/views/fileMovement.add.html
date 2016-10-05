@@ -1,0 +1,157 @@
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Nuevo Movimiento de Legajo</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Formulario para crear un nuevo movimiento de legajo
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form" name="fileMovementForm" id="fileMovementForm" data-ng-submit="fileMovementSubmit()" autocomplete="off" novalidate>
+
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="form-group col-sm-12" ng-class="{'has-error' : fileMovementForm.submitted && fileMovementForm.autocomplete.$invalid}">
+                                            <label for="autocomplete" class="control-label">Cliente (*)</label>
+                                            <autocomplete ng-model="clientSelected" data="clients" on-type="updateClients"
+                                                          autocomplete-required="true"
+                                                          attr-placeholder="Nombres del cliente o compa&ntilde;ia"
+                                                          attr-input-id="name"
+                                                          attr-input-class="form-control"
+                                                          click-activation="true"
+                                            ></autocomplete>
+                                            <ng-messages ng-show="fileMovementForm.submitted" for="fileMovementForm.autocomplete.$error">
+                                                <ng-message when="required"><label class="control-label" for="autocomplete">Valor requerido</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-4" ng-class="{'has-error' : fileMovementForm.submitted && fileMovementForm.orderDate.$invalid}">
+                                            <label for="orderDate" class="control-label">Fecha de Pedido (*)</label>
+                                            <p class="input-group">
+                                                <input class="form-control" placeholder="DD-MM-AAAA" type="text"
+                                                       name="orderDate" id="orderDate"
+                                                       datepicker-popup="dd-MM-yyyy"
+                                                       ng-model="file.orderDate"
+                                                       is-open="orderDate.opened"
+                                                       ng-required="true"
+                                                       current-text="Hoy" clear-text="Limpiar" close-text="Cerrar" />
+                                                  <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="orderDate.opened = true"><i class="fa fa-calendar"></i></button>
+                                                  </span>
+                                            </p>
+                                            <ng-messages ng-show="fileMovementForm.submitted" for="fileMovementForm.orderDate.$error">
+                                                <ng-message when="required"><label class="control-label" for="orderDate">Valor requerido</label></ng-message>
+                                                <ng-message when="date"><label class="control-label" for="orderDate">Fecha invalida</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                        <div class="form-group col-sm-4" ng-class="{'has-error' : fileMovementForm.submitted && fileMovementForm.shippingDate.$invalid}">
+                                            <label for="shippingDate" class="control-label">Fecha de Envio (*)</label>
+                                            <p class="input-group">
+                                                <input class="form-control" placeholder="DD-MM-AAAA" type="text"
+                                                       name="shippingDate" id="shippingDate"
+                                                       datepicker-popup="dd-MM-yyyy"
+                                                       ng-model="file.shippingDate"
+                                                       is-open="shippingDate.opened"
+                                                       ng-required="true"
+                                                       current-text="Hoy" clear-text="Limpiar" close-text="Cerrar"
+                                                       min-date="file.orderDate"/>
+                                                  <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="shippingDate.opened = true"><i class="fa fa-calendar"></i></button>
+                                                  </span>
+                                            </p>
+                                            <ng-messages ng-show="fileMovementForm.submitted" for="fileMovementForm.shippingDate.$error">
+                                                <ng-message when="required"><label class="control-label" for="shippingDate">Valor requerido</label></ng-message>
+                                                <ng-message when="date"><label class="control-label" for="shippingDate">Fecha invalida</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                        <div class="form-group col-sm-4" ng-class="{'has-error' : fileMovementForm.submitted && fileMovementForm.returnDate.$invalid}">
+                                            <label for="returnDate" class="control-label">Fecha de Devoluci&oacute;n</label>
+                                            <p class="input-group">
+                                                <input class="form-control" placeholder="DD-MM-AAAA" type="text"
+                                                       name="returnDate" id="returnDate"
+                                                       datepicker-popup="dd-MM-yyyy"
+                                                       ng-model="file.returnDate"
+                                                       is-open="returnDate.opened"
+                                                       current-text="Hoy" clear-text="Limpiar" close-text="Cerrar"
+                                                       max-date="returnDateMaxDate"
+                                                       min-date="file.shippingDate"/>
+                                                  <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="returnDate.opened = true"><i class="fa fa-calendar"></i></button>
+                                                  </span>
+                                            </p>
+                                            <ng-messages ng-show="fileMovementForm.submitted" for="fileMovementForm.returnDate.$error">
+                                                <ng-message when="date"><label class="control-label" for="returnDate">Fecha invalida</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-6" ng-class="{'has-error' : fileMovementForm.submitted && fileMovementForm.applicant.$invalid}">
+                                            <label for="applicant" class="control-label">Solicitante (*)</label>
+                                            <input class="form-control"  type="text"
+                                                   name="applicant" placeholder="Solicitante" id="applicant"
+                                                   data-ng-model="file.applicant"
+                                                   ng-required="true"
+                                                   ng-maxlength="50">
+                                            <ng-messages ng-show="fileMovementForm.submitted" for="fileMovementForm.applicant.$error">
+                                                <ng-message when="required"><label class="control-label" for="applicant">Valor requerido</label></ng-message>
+                                                <ng-message when="maxlength"><label class="control-label" for="applicant">M&aacute;ximo 50</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                        <div class="form-group col-sm-6" ng-class="{'has-error' : fileMovementForm.submitted && fileMovementForm.location.$invalid}">
+                                            <label for="location" class="control-label">Ubicaci&oacute;n (*)</label>
+                                            <input class="form-control" placeholder="Ubicaci&oacute;n" type="text"
+                                                   name="location" id="location"
+                                                   data-ng-model="file.location"
+                                                   ng-required="true"
+                                                   ng-maxlength="50">
+                                            <ng-messages ng-show="fileMovementForm.submitted" for="fileMovementForm.location.$error">
+                                                <ng-message when="required"><label class="control-label" for="location">Valor requerido</label></ng-message>
+                                                <ng-message when="maxlength"><label class="control-label" for="location">M&aacute;ximo 50</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-12" ng-class="{'has-error' : fileMovementForm.submitted && fileMovementForm.comments.$invalid}">
+                                            <label for="comments" class="control-label">Comentarios</label>
+                                            <textarea class="form-control" style="height: 50px"
+                                                      name="comments" id="comments"
+                                                      data-ng-model="file.comments"
+                                                      ng-maxlength="100">
+                                                </textarea>
+                                            <ng-messages ng-show="fileMovementForm.submitted" for="fileMovementForm.comments.$error">
+                                                <ng-message when="maxlength"><label class="control-label" for="comments">M&aacute;ximo 100</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                            <a class="btn btn-default" ui-sref="^.list">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                            </a>
+                                            <button type="submit" class="btn btn-primary" ng-click="fileMovementForm.submitted = true" ng-disabled="fileMovementForm.submitDisabled">
+                                                <i class="fa fa-arrow-right"></i>&nbsp;Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-wrapper -->

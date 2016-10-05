@@ -1,0 +1,323 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div data-ng-if="client.id">
+            <div data-ng-if="client.individual">
+                <h1 class="page-header">Cliente: {{client.names}} {{client.lastNames}}</h1>
+            </div>
+            <div data-ng-if="!client.individual">
+                <h1 class="page-header">Cliente: {{client.businessName}}</h1>
+            </div>
+        </div>
+        <div data-ng-if="!client.id">
+            <h1 class="page-header">Nuevo Cliente</h1>
+        </div>
+        <p>
+            <strong><span class="text-success">Detalles ></span></strong>
+            <strong><span class="text-success">Domicilios ></span></strong>
+            <strong><span class="text-success">Tel&eacute;fonos ></span></strong>
+            <strong><span class="text-muted">Cuentas Bancarias</span></strong>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+
+        <!-- ********* LIST ************ -->
+        <div class="panel panel-default" data-ng-if="stage == 'list'">
+            <div class="panel-heading">
+                Cuentas Bancarias
+                <button type="button" class="btn btn-primary btn-xs pull-right" ng-click="add()">
+                    <i class="fa fa-plus"></i> Agregar Cuenta
+                </button>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table datatable="ng" class="order-column cell-border hover" cellspacing="0" width="100%" id="dataTables-step5">
+                        <thead>
+                            <tr>
+                                <th>Banco</th>
+                                <th>Sucursal</th>
+                                <th>Tipo Cuenta</th>
+                                <th>Nro. Cuenta</th>
+                                <th>CBU</th>
+                                <th>Activo</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="d in client.bankAccounts">
+                                <td>{{d.bank.description}}</td>
+                                <td>{{d.branchOffice}}</td>
+                                <td>{{d.accountType.description}}</td>
+                                <td>{{d.accountNumber}}</td>
+                                <td>{{d.cbu}}</td>
+                                <td>{{d.active | yesno}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-xs"
+                                       ng-click="edit($index)">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </button>&nbsp;
+                                    <button type="button" class="btn btn-danger btn-xs" data-ng-if="!clientId"
+                                            ng-click="remove($index)">
+                                        <i class="fa fa-trash-o"></i> Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </br>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <fieldset>
+                            <div class="row">
+                                <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                    <button type="button" class="btn btn-default" ng-click="previous()">
+                                        <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" ng-click="next()" ng-disabled="submitDisabled">
+                                        <i class="fa fa-save"></i>&nbsp;Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ****** CREATE ******** -->
+        <div class="panel panel-default" data-ng-if="stage == 'add'">
+            <div class="panel-heading">
+                Nueva Cuenta Bancaria
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" name="addAccountForm" id="addAccountForm" data-ng-submit="confirmAdd()" autocomplete="off" novalidate ng-init="setFormScope(this)">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : addAccountForm.submitted && addAccountForm.bank.$invalid}">
+                                        <label for="bank" class="control-label">Banco (*)</label>
+                                        <select class="form-control"
+                                                name="bank" id="bank"
+                                                data-ng-model="account.bank"
+                                                ng-required="true"
+                                                ng-options="bank.description for bank in banks track by bank.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="addAccountForm.submitted" for="addAccountForm.bank.$error">
+                                            <ng-message when="required"><label class="control-label" for="bank">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : addAccountForm.submitted && addAccountForm.branchOffice.$invalid}">
+                                        <label for="branchOffice" class="control-label">Sucursal (*)</label>
+                                        <input class="form-control" placeholder="Sucursal" type="text"
+                                               name="branchOffice" id="branchOffice"
+                                               data-ng-model="account.branchOffice"
+                                               ng-required="true"
+                                               ng-minlength="2"
+                                               ng-maxlength="50">
+                                        <ng-messages ng-show="addAccountForm.submitted" for="addAccountForm.branchOffice.$error">
+                                            <ng-message when="required"><label class="control-label" for="branchOffice">Valor requerido</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="branchOffice">M&aacute;ximo 50 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="branchOffice">M&iacute;nimo 2 caracteres</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : addAccountForm.submitted && addAccountForm.accountType.$invalid}">
+                                        <label for="accountType" class="control-label">Tipo de Cuenta (*)</label>
+                                        <select class="form-control"
+                                                name="accountType" id="accountType"
+                                                data-ng-model="account.accountType"
+                                                ng-required="true"
+                                                ng-options="accountType.description for accountType in accountsType track by accountType.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="addAccountForm.submitted" for="addAccountForm.accountType.$error">
+                                            <ng-message when="required"><label class="control-label" for="accountType">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : addAccountForm.submitted && addAccountForm.accountNumber.$invalid}">
+                                        <label for="accountNumber" class="control-label">N&uacute;mero de Cuenta (*)</label>
+                                        <input class="form-control" placeholder="N&uacute;mero de Cuenta" type="text"
+                                               name="accountNumber" id="accountNumber"
+                                               data-ng-model="account.accountNumber"
+                                               ng-required="true"
+                                               ng-pattern="/^[0-9]+$/"
+                                               ng-minlength="22"
+                                               ng-maxlength="22">
+                                        <ng-messages ng-show="addAccountForm.submitted" for="addAccountForm.accountNumber.$error">
+                                            <ng-message when="required"><label class="control-label" for="accountNumber">Valor requerido</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="accountNumber">Solo se permiten n&uacute;meros</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="accountNumber">Deben ser 22 n&uacute;meros</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="accountNumber">Deben ser 22 n&uacute;meros</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : addAccountForm.submitted && addAccountForm.cbu.$invalid}">
+                                        <label for="cbu" class="control-label">CBU (*)</label>
+                                        <input class="form-control" placeholder="CBU" type="text"
+                                               name="cbu" id="cbu"
+                                               data-ng-model="account.cbu"
+                                               ng-required="true"
+                                               ng-pattern="/^[0-9]+$/"
+                                               ng-minlength="22"
+                                               ng-maxlength="22">
+                                        <ng-messages ng-show="addAccountForm.submitted" for="addAccountForm.cbu.$error">
+                                            <ng-message when="required"><label class="control-label" for="cbu">Valor requerido</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="cbu">Solo se permiten n&uacute;meros</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="cbu">Deben ser 22 n&uacute;meros</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="cbu">Deben ser 22 n&uacute;meros</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : addAccountForm.submitted && addAccountForm.active.$invalid}">
+                                        <label for="active" class="control-label">Activo (*)</label>
+                                        <select class="form-control"
+                                                name="active" id="active"
+                                                data-ng-model="account.active"
+                                                ng-required="true"
+                                                ng-options="item.value as item.description for item in active">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="addAccountForm.submitted" for="addAccountForm.active.$error">
+                                            <ng-message when="required"><label class="control-label" for="active">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                        <button type="button" class="btn btn-default" ng-click="list()">
+                                            <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" >
+                                            <i class="fa fa-save"></i>&nbsp;Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ****** CREATE ******** -->
+        <div class="panel panel-default" data-ng-if="stage == 'edit'">
+            <div class="panel-heading">
+                Edici&oacute;n de Tel&eacute;fono
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" name="editAccountForm" id="editAccountForm" data-ng-submit="confirmEdit()" autocomplete="off" novalidate ng-init="setFormScope(this)">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : editAccountForm.submitted && editAccountForm.bank.$invalid}">
+                                        <label for="bank" class="control-label">Banco (*)</label>
+                                        <select class="form-control"
+                                                name="bank" id="bank"
+                                                data-ng-model="account.bank"
+                                                ng-required="true"
+                                                ng-options="bank.description for bank in banks track by bank.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="editAccountForm.submitted" for="editAccountForm.bank.$error">
+                                            <ng-message when="required"><label class="control-label" for="bank">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : editAccountForm.submitted && editAccountForm.branchOffice.$invalid}">
+                                        <label for="branchOffice" class="control-label">Sucursal (*)</label>
+                                        <input class="form-control" placeholder="Sucursal" type="text"
+                                               name="branchOffice" id="branchOffice"
+                                               data-ng-model="account.branchOffice"
+                                               ng-required="true"
+                                               ng-minlength="2"
+                                               ng-maxlength="50">
+                                        <ng-messages ng-show="editAccountForm.submitted" for="editAccountForm.branchOffice.$error">
+                                            <ng-message when="required"><label class="control-label" for="branchOffice">Valor requerido</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="branchOffice">M&aacute;ximo 50 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="branchOffice">M&iacute;nimo 2 caracteres</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : editAccountForm.submitted && editAccountForm.accountType.$invalid}">
+                                        <label for="accountType" class="control-label">Tipo de Cuenta (*)</label>
+                                        <select class="form-control"
+                                                name="accountType" id="accountType"
+                                                data-ng-model="account.accountType"
+                                                ng-required="true"
+                                                ng-options="accountType.description for accountType in accountsType track by accountType.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="editAccountForm.submitted" for="editAccountForm.accountType.$error">
+                                            <ng-message when="required"><label class="control-label" for="accountType">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : editAccountForm.submitted && editAccountForm.accountNumber.$invalid}">
+                                        <label for="accountNumber" class="control-label">N&uacute;mero de Cuenta (*)</label>
+                                        <input class="form-control" placeholder="N&uacute;mero de Cuenta" type="text"
+                                               name="accountNumber" id="accountNumber"
+                                               data-ng-model="account.accountNumber"
+                                               ng-required="true"
+                                               ng-pattern="/^[0-9]+$/"
+                                               ng-minlength="22"
+                                               ng-maxlength="22">
+                                        <ng-messages ng-show="editAccountForm.submitted" for="editAccountForm.accountNumber.$error">
+                                            <ng-message when="required"><label class="control-label" for="accountNumber">Valor requerido</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="accountNumber">Solo se permiten n&uacute;meros</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="accountNumber">Deben ser 22 n&uacute;meros</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="accountNumber">Deben ser 22 n&uacute;meros</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : editAccountForm.submitted && editAccountForm.cbu.$invalid}">
+                                        <label for="cbu" class="control-label">CBU (*)</label>
+                                        <input class="form-control" placeholder="CBU" type="text"
+                                               name="cbu" id="cbu"
+                                               data-ng-model="account.cbu"
+                                               ng-required="true"
+                                               ng-pattern="/^[0-9]+$/"
+                                               ng-minlength="22"
+                                               ng-maxlength="22">
+                                        <ng-messages ng-show="editAccountForm.submitted" for="editAccountForm.cbu.$error">
+                                            <ng-message when="required"><label class="control-label" for="cbu">Valor requerido</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="cbu">Solo se permiten n&uacute;meros</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="cbu">Deben ser 22 n&uacute;meros</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="cbu">Deben ser 22 n&uacute;meros</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : editAccountForm.submitted && editAccountForm.active.$invalid}">
+                                        <label for="active" class="control-label">Activo (*)</label>
+                                        <select class="form-control"
+                                                name="active" id="active"
+                                                data-ng-model="account.active"
+                                                ng-options="item.value as item.description for item in active">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="editAccountForm.submitted" for="editAccountForm.active.$error">
+                                            <ng-message when="required"><label class="control-label" for="active">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                        <button type="button" class="btn btn-default" ng-click="list()">
+                                            <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" >
+                                            <i class="fa fa-save"></i>&nbsp;Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

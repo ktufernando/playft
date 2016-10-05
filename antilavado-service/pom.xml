@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>antilavado-service</artifactId>
+	<packaging>jar</packaging>
+	<parent>
+		<groupId>ar.com.jf.antilavado</groupId>
+		<artifactId>antilavado-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<dependencies>
+
+		<!-- modules -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>antilavado-repository</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+       <!-- Utils -->
+		<dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+		</dependency>
+
+		<!-- License -->
+		<dependency>
+			<groupId>net.nicholaswilliams.java.licensing</groupId>
+			<artifactId>licensing-core</artifactId>
+		</dependency>
+		<dependency><!-- Use this dependency in the application that you generate licenses with -->
+			<groupId>net.nicholaswilliams.java.licensing</groupId>
+			<artifactId>licensing-licensor-base</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+
+		<!-- Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+</project>

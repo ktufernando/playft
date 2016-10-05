@@ -1,0 +1,29 @@
+<div growl></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="license-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Ingreso de la licencia de la Aplicaci&oacute;n</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" name="licenseAddForm" id="licenseAddForm" data-ng-submit="addLicense()" autocomplete="off" novalidate>
+                        <fieldset>
+                            <div class="form-group" ng-class="{'has-error' : licenseAddForm.submitted && licenseAddForm.license.$invalid}">
+                                <ng-messages ng-show="licenseAddForm.submitted" for="licenseAddForm.license.$error">
+                                    <ng-message when="required"><label class="control-label" for="license">Valor requerido</label></ng-message>
+                                </ng-messages>
+                                <textarea class="form-control"  placeholder="Ingrese la licencia" type="text" autofocus
+                                       rows="8"
+                                       name="license" id="license"
+                                       data-ng-model="licenseRequest.licenseString"
+                                       ng-required="true"></textarea>
+                            </div>
+                            <input type="submit" class="btn btn-lg btn-success btn-block" value="Aceptar" ng-disabled="licenseAddForm.submitDisabled"/>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

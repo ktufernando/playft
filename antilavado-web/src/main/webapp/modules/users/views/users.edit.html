@@ -1,0 +1,150 @@
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Usuario: {{user.login}}</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Formulario para editar el usuario: {{user.login}}
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form" name="editUserForm" id="editUserForm" data-ng-submit="editUser()" autocomplete="off" novalidate>
+                                <fieldset>
+                                    <div class="row"><div class="form-group col-sm-6" ng-class="{'has-error' : editUserForm.submitted && editUserForm.firstName.$invalid}">
+                                        <label for="firstName" class="control-label">Nombre (*)</label>
+                                        <input class="form-control" placeholder="Nombre" type="text" autofocus
+                                               name="firstName" id="firstName"
+                                               data-ng-model="user.firstName"
+                                               ng-required="true"
+                                               ng-minlength="2"
+                                               ng-maxlength="50"
+                                               ng-pattern="/^[a-zA-Z]*$/">
+                                        <ng-messages ng-show="editUserForm.submitted" for="editUserForm.firstName.$error">
+                                            <ng-message when="required"><label class="control-label" for="firstName">Valor requerido</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="firstName">M&aacute;ximo 50 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="firstName">M&iacute;nimo 2 caracteres</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="firstName">Solo se permiten letras</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : editUserForm.submitted && editUserForm.lastName.$invalid}">
+                                        <label for="lastName" class="control-label">Apellido (*)</label>
+                                        <input class="form-control" placeholder="Apellido" type="text"
+                                               name="lastName" id="lastName"
+                                               data-ng-model="user.lastName"
+                                               ng-required="true"
+                                               ng-minlength="2"
+                                               ng-maxlength="50"
+                                               ng-pattern="/^[a-zA-Z]*$/">
+                                        <ng-messages ng-show="editUserForm.submitted" for="editUserForm.lastName.$error">
+                                            <ng-message when="required"><label class="control-label" for="lastName">Valor requerido</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="lastName">M&aacute;ximo 50 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="lastName">M&iacute;nimo 2 caracteres</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="lastName">Solo se permiten letras</label></ng-message>
+                                        </ng-messages>
+                                    </div></div>
+
+                                    <div class="row"><div class="form-group col-sm-6">
+                                        <label for="login" class="control-label">Usuario</label>
+                                        <input class="form-control" type="text"
+                                               name="login" id="login"
+                                               data-ng-model="user.login"
+                                               disabled>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : editUserForm.submitted && editUserForm.email.$invalid}">
+                                        <label for="lastName" class="control-label">E-Mail (*)</label>
+                                        <input class="form-control" placeholder="E-Mail" type="email"
+                                               name="email" id="email"
+                                               data-ng-model="user.email"
+                                               ng-required="true"
+                                               ng-minlength="7"
+                                               ng-maxlength="50"
+                                               ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/">
+                                        <ng-messages ng-show="editUserForm.submitted" for="editUserForm.email.$error">
+                                            <ng-message when="required"><label class="control-label" for="email">Valor requerido</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="email">M&aacute;ximo 50 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="email">M&iacute;nimo 7 caracteres</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="email">E-Mail Inv&aacute;lido</label></ng-message>
+                                        </ng-messages>
+                                    </div></div>
+
+                                    <div class="row"><div class="form-group col-sm-6" ng-class="{'has-error' : editUserForm.submitted && editUserForm.password.$invalid}">
+                                        <label for="password" class="control-label">Contrase&ntilde;a</label>
+                                        <input class="form-control" placeholder="Contrase&ntilde;a" type="password" autofocus
+                                               name="password" id="password"
+                                               data-ng-model="user.password"
+                                               ng-minlength="5"
+                                               ng-maxlength="100">
+                                        <ng-messages ng-show="editUserForm.submitted" for="editUserForm.password.$error">
+                                            <ng-message when="required"><label class="control-label" for="password">Valor requerido</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="password">M&aacute;ximo 100 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="password">M&iacute;nimo 5 caracteres</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : editUserForm.submitted && editUserForm.cpassword.$invalid}">
+                                        <label for="cpassword" class="control-label">Confirmaci&oacute;n de Contrase&ntilde;a</label>
+                                        <input class="form-control" placeholder="Confirmaci&oacute;n de Contrase&ntilde;a" type="password"
+                                               name="cpassword" id="cpassword"
+                                               data-ng-model="cpassword"
+                                               ng-required="user.password"
+                                               ng-minlength="5"
+                                               ng-maxlength="100"
+                                               pw-check="password">
+                                        <ng-messages ng-show="editUserForm.submitted" for="editUserForm.cpassword.$error">
+                                            <ng-message when="required"><label class="control-label" for="cpassword">Valor requerido</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="cpassword">M&aacute;ximo 100 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="cpassword">M&iacute;nimo 5 caracteres</label></ng-message>
+                                            <ng-message when="pwmatch"><label class="control-label" for="cpassword">No coinciden las contrase&aacute;as</label></ng-message>
+                                        </ng-messages>
+                                    </div></div>
+
+                                    <div class="row"><div class="form-group col-sm-6" ng-class="{'has-error' : editUserForm.submitted && editUserForm.authorities.$invalid}">
+                                        <label for="authorities" class="control-label">Roles</label>
+                                        <select multiple class="form-control"
+                                                name="authorities" id="authorities"
+                                                data-ng-model="authorities"
+                                                ng-required="true">
+                                            <option value="ROLE_USER">Usuario</option>
+                                            <option value="ROLE_ADMIN">Administrador</option>
+                                        </select>
+                                        <ng-messages ng-show="editUserForm.submitted" for="editUserForm.authorities.$error">
+                                            <ng-message when="required"><label class="control-label" for="authorities">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" >
+                                        <label class="control-label checkbox-inline">
+                                            <input type="checkbox" name="enabled" id="enabled" value="" data-ng-model="user.enabled">
+                                            Habilitado
+                                        </label>
+                                        </br>
+                                    </div></div>
+
+                                    <div class="row">
+                                        <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                            <a class="btn btn-default" ui-sref="antilavado.authenticated.users">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                            </a>
+                                            <button type="submit" class="btn btn-primary" ng-disabled="editUserForm.submitDisabled">
+                                                <i class="fa fa-save"></i>&nbsp;Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /#page-wrapper -->

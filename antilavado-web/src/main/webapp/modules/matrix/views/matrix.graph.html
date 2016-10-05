@@ -1,0 +1,73 @@
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <div data-ng-if="client.individual">
+                <h1 class="page-header">Matriz de Riesgo | Cliente: {{client.names}} {{client.lastNames}}</h1>
+            </div>
+            <div data-ng-if="!client.individual">
+                <h1 class="page-header">Matriz de Riesgo | Cliente: {{client.businessName}}</h1>
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Matriz de Riesgo
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="col-xs-5">Factor de Riesgo</th>
+                                        <th class="col-xs-5">Impacto</th>
+                                        <th class="col-xs-2">Ponderaci&oacute;n Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="item in riskMatrix.factors">
+                                        <td>{{item.factor}}</td>
+                                        <td>{{item.impact}}</td>
+                                        <td class="text-center">{{item.ponderation}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" data-ng-style="{'color' : riskMatrix.level.color}">
+                                            {{riskMatrix.level.description}}
+                                        </td>
+                                        <td class="text-center" data-ng-style="{'color' : riskMatrix.level.color}">
+                                            {{riskMatrix.totalPonderation}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div>
+                            <canvas id="riskFactorLineGraph" height="35" width="100%"></canvas>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                            <button type="button" class="btn btn-default" ng-click="previous()">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-wrapper -->

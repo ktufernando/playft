@@ -1,0 +1,31 @@
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Nuevo Nivel de Riesgo</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Formulario para crear un nuevo nivel
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form" name="configurationLevelForm" id="configurationLevelForm" data-ng-submit="configurationLevelSubmit()" autocomplete="off" novalidate>
+                                <div ng-include="'modules/configurations/views/configurations.levels.form.html'"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-wrapper -->

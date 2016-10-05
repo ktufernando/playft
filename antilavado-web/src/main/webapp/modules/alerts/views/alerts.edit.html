@@ -1,0 +1,153 @@
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Alerta: {{alert.id}}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            <label>Cliente: </label>
+        </div>
+        <div class="col-lg-2 text-right">
+            <span data-ng-if="alert.client.individual">
+                {{alert.client.names}} {{alert.client.lastNames}}
+            </span>
+            <span data-ng-if="!alert.client.individual">
+                {{alert.client.businessName}}
+            </span>
+        </div>
+        <div class="col-lg-2">
+            <label>Periodo: </label>
+        </div>
+        <div class="col-lg-2 text-right">
+            {{alert.periodDescription}}
+        </div>
+        <div class="col-lg-2" data-ng-if="alert.assignedUser">
+            <label>Usuario Asignado: </label>
+        </div>
+        <div class="col-lg-2 text-right">
+            {{alert.assignedUser.firstName}} {{alert.assignedUser.lastName}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            <label>Estimaci&oacute;n L&iacute;mite: </label>
+        </div>
+        <div class="col-lg-2 text-right">
+            $ {{alert.client.economicFinancialProfile.monthlyEstimate | number:2}}
+        </div>
+        <div class="col-lg-2">
+            <label>Monto Recaudado: </label>
+        </div>
+        <div class="col-lg-2 text-right">
+            $ {{alert.periodAmount | number:2}}
+        </div>
+        <div class="col-lg-2">
+            <label>Diferencia: </label>
+        </div>
+        <div class="col-lg-2 text-right">
+            $ {{alert.difference | number:2}}
+        </div>
+    </div>
+    </br>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Formulario para editar una alerta
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form" name="alertForm" id="alertForm" data-ng-submit="alertFormSubmit()" autocomplete="off" novalidate>
+
+                                <fieldset>
+
+                                    <div class="row">
+                                        <div class="form-group col-sm-7" ng-class="{'has-error' : alertForm.submitted && alertForm.assignedUser.$invalid}">
+                                            <label for="assignedUser" class="control-label">Usuario Asignado</label>
+                                            <select class="form-control"
+                                                    name="assignedUser" id="assignedUser"
+                                                    data-ng-model="alert.assignedUser"
+                                                    ng-options="s.name for s in users track by s.id"
+                                                    >
+                                                <option ng-selected="true" value="">- Seleccionar -</option>
+                                            </select>
+                                            <ng-messages ng-show="alertForm.submitted" for="alertForm.assignedUser.$error">
+                                                <ng-message when="required"><label class="control-label" for="assignedUser">Valor requerido</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-sm-7" ng-class="{'has-error' : alertForm.submitted && alertForm.unusualOperation.$invalid}" data-ng-if="alert.assignedUser != null">
+                                            <label for="unusualOperation" class="control-label">Operaci&oacute;n Inusual</label>
+                                            <select class="form-control"
+                                                    name="unusualOperation" id="unusualOperation"
+                                                    data-ng-model="alert.unusualOperation"
+                                                    ng-options="s.description for s in unusualOperation track by s.description">
+                                                <option ng-selected="true" value="">- Seleccionar -</option>
+                                            </select>
+                                            <ng-messages ng-show="alertForm.submitted" for="alertForm.unusualOperation.$error">
+                                                <ng-message when="required"><label class="control-label" for="unusualOperation">Valor requerido</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                        <div class="form-group col-sm-5" ng-class="{'has-error' : alertForm.submitted && alertForm.uifReport.$invalid}" data-ng-if="alert.unusualOperation.id == 8">
+                                            <label for="uifReport" class="control-label">Reporte UIF</label>
+                                            <p class="input-group">
+                                                <input class="form-control" placeholder="DD-MM-AAAA" type="text"
+                                                       name="uifReport" id="uifReport"
+                                                       datepicker-popup="dd-MM-yyyy"
+                                                       ng-model="alert.uifReport"
+                                                       is-open="uifReport.opened"
+                                                       ng-required="alert.unusualOperation.id == 8"
+                                                       current-text="Hoy" clear-text="Limpiar" close-text="Cerrar" />
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="uifReport.opened = true"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </p>
+                                            <ng-messages ng-show="alertForm.submitted" for="alertForm.uifReport.$error">
+                                                <ng-message when="date"><label class="control-label" for="uifReport">Fecha invalida</label></ng-message>
+                                                <ng-message when="required"><label class="control-label" for="uifReport">Valor requerido</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-sm-12" ng-class="{'has-error' : alertForm.submitted && alertForm.monitoring.$invalid}" data-ng-if="alert.unusualOperation.id != 5">
+                                            <label for="monitoring" class="control-label">Informe de Seguimiento</label>
+                                            <textarea class="form-control" style="height: 150px"
+                                                      name="monitoring" id="monitoring"
+                                                      data-ng-model="alert.monitoring"
+                                                      ng-maxlength="3000"
+                                                      ng-required="alert.unusualOperation.id != 5">
+                                                </textarea>
+                                            <ng-messages ng-show="alertForm.submitted" for="alertForm.monitoring.$error">
+                                                <ng-message when="required"><label class="control-label" for="monitoring">Valor requerido</label></ng-message>
+                                                <ng-message when="maxlength"><label class="control-label" for="monitoring">M&aacute;ximo 3000</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                            <a class="btn btn-default" ui-sref="antilavado.authenticated.alerts.list">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                            </a>
+                                            <button type="submit" class="btn btn-primary" ng-click="alertForm.submitted = true" ng-disabled="alertForm.submitDisabled">
+                                                <i class="fa fa-save"></i>&nbsp;Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-wrapper -->

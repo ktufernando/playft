@@ -1,0 +1,130 @@
+<fieldset>
+    <div class="row">
+        <div class="form-group col-sm-3" ng-class="{'has-error' : configurationMasterFactorForm.submitted && configurationMasterFactorForm.ponderation.$invalid}">
+            <label for="ponderation" class="control-label">Ponderaci&oacute;n (*)</label>
+            <input class="form-control"  type="number"
+                   name="ponderation" placeholder="1" id="ponderation"
+                   data-ng-model="factor.ponderation"
+                   ng-required="true"
+                   ng-min="1"
+                   ng-max="99"
+                   ng-pattern="/^[0-9]*$/">
+            <ng-messages ng-show="configurationMasterFactorForm.submitted" for="configurationMasterFactorForm.ponderation.$error">
+                <ng-message when="required"><label class="control-label" for="ponderation">Valor requerido</label></ng-message>
+                <ng-message when="max"><label class="control-label" for="ponderation">M&aacute;ximo 99</label></ng-message>
+                <ng-message when="min"><label class="control-label" for="ponderation">M&iacute;nimo 1</label></ng-message>
+                <ng-message when="number"><label class="control-label" for="ponderation">Solo se permiten n&uacute;meros</label></ng-message>
+                <ng-message when="pattern"><label class="control-label" for="ponderation">Solo se permiten n&uacute;meros enteros</label></ng-message>
+            </ng-messages>
+        </div>
+        <div class="form-group col-sm-3" ng-class="{'has-error' : configurationMasterFactorForm.submitted && configurationMasterFactorForm.active.$invalid}">
+            <label for="active" class="control-label">Activo (*)</label>
+            <select class="form-control"
+                    name="active" id="active"
+                    data-ng-model="factor.active"
+                    ng-required="true"
+                    ng-options="item.value as item.description for item in active">
+                <option value="">- Seleccionar -</option>
+            </select>
+            <ng-messages ng-show="configurationMasterFactorForm.submitted" for="configurationMasterFactorForm.active.$error">
+                <ng-message when="required"><label class="control-label" for="active">Valor requerido</label></ng-message>
+            </ng-messages>
+        </div>
+    </div>
+
+    <!--
+    <div class="row">
+        <div class="form-group col-sm-12" ng-class="{'has-error' : configurationMasterFactorForm.submitted && configurationMasterFactorForm.description.$invalid}">
+            <label for="description" class="control-label">Descripci&oacute;n (*)</label>
+            <input class="form-control" placeholder="Descripci&oacute;n" type="text"
+                   name="description" id="description"
+                   data-ng-model="factor.description"
+                   ng-required="true"
+                   ng-minlength="2"
+                   ng-maxlength="150">
+            <ng-messages ng-show="configurationMasterFactorForm.submitted" for="configurationMasterFactorForm.description.$error">
+                <ng-message when="required"><label class="control-label" for="description">Valor requerido</label></ng-message>
+                <ng-message when="maxlength"><label class="control-label" for="description">M&aacute;ximo 150 caracteres</label></ng-message>
+                <ng-message when="minlength"><label class="control-label" for="description">M&iacute;nimo 2 caracteres</label></ng-message>
+            </ng-messages>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-2" ng-class="{'has-error' : configurationMasterFactorForm.submitted && configurationMasterFactorForm.ponderation.$invalid}">
+            <label for="ponderation" class="control-label">Ponderaci&oacute;n (*)</label>
+            <input class="form-control"  type="number"
+                   name="ponderation" placeholder="1" id="ponderation"
+                   data-ng-model="factor.ponderation"
+                   ng-required="true"
+                   ng-min="1"
+                   ng-max="99"
+                   ng-pattern="/^[0-9]*$/">
+            <ng-messages ng-show="configurationMasterFactorForm.submitted" for="configurationMasterFactorForm.ponderation.$error">
+                <ng-message when="required"><label class="control-label" for="ponderation">Valor requerido</label></ng-message>
+                <ng-message when="max"><label class="control-label" for="ponderation">M&aacute;ximo 99</label></ng-message>
+                <ng-message when="min"><label class="control-label" for="ponderation">M&iacute;nimo 1</label></ng-message>
+                <ng-message when="number"><label class="control-label" for="ponderation">Solo se permiten n&uacute;meros</label></ng-message>
+                <ng-message when="pattern"><label class="control-label" for="ponderation">Solo se permiten n&uacute;meros enteros</label></ng-message>
+            </ng-messages>
+        </div>
+        <div class="form-group col-sm-4" ng-class="{'has-error' : configurationMasterFactorForm.submitted && configurationMasterFactorForm.table.$invalid}">
+            <label for="table" class="control-label">Tabla (*)</label>
+            <select class="form-control"
+                    name="table" id="table"
+                    data-ng-model="factor.mapTable"
+                    ng-required="true"
+                    ng-change="tableSelected()">
+                <option value="">- Seleccionar -</option>
+                <option ng-selected="{{table.code == factor.mapTable}}"
+                        ng-repeat="table in tables | orderBy:'desc'"
+                        value="{{table.code}}">
+                    {{table.desc}}
+                </option>
+            </select>
+            <ng-messages ng-show="configurationMasterFactorForm.submitted" for="configurationMasterFactorForm.table.$error">
+                <ng-message when="required"><label class="control-label" for="table">Valor requerido</label></ng-message>
+            </ng-messages>
+        </div>
+        <div class="form-group col-sm-4" ng-class="{'has-error' : configurationMasterFactorForm.submitted && configurationMasterFactorForm.field.$invalid}">
+            <label for="field" class="control-label">Campo (*)</label>
+            <select class="form-control"
+                    name="field" id="field"
+                    data-ng-model="factor.mapColumn"
+                    ng-required="true">
+                <option value="">- Seleccionar -</option>
+                <option ng-selected="{{field.code == factor.mapColumn}}"
+                        ng-repeat="field in fields | orderBy:'desc'"
+                        value="{{field.code}}">
+                    {{field.desc}}
+                </option>
+            </select>
+            <ng-messages ng-show="configurationMasterFactorForm.submitted" for="configurationMasterFactorForm.field.$error">
+                <ng-message when="required"><label class="control-label" for="field">Valor requerido</label></ng-message>
+            </ng-messages>
+        </div>
+        <div class="form-group col-sm-2" ng-class="{'has-error' : configurationMasterFactorForm.submitted && configurationMasterFactorForm.active.$invalid}">
+            <label for="active" class="control-label">Activo (*)</label>
+            <select class="form-control"
+                    name="active" id="active"
+                    data-ng-model="factor.active"
+                    ng-required="true"
+                    ng-options="item.value as item.description for item in active">
+                <option value="">- Seleccionar -</option>
+            </select>
+            <ng-messages ng-show="configurationMasterFactorForm.submitted" for="configurationMasterFactorForm.active.$error">
+                <ng-message when="required"><label class="control-label" for="active">Valor requerido</label></ng-message>
+            </ng-messages>
+        </div>
+    </div>
+    -->
+    <div class="row">
+        <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+            <a class="btn btn-default" ui-sref="antilavado.authenticated.configuration.factors.list">
+                <i class="fa fa-arrow-left"></i>&nbsp;Atras
+            </a>
+            <button type="submit" class="btn btn-primary" ng-click="configurationMasterFactorForm.submitted = true" ng-disabled="configurationMasterFactorForm.submitDisabled">
+                <i class="fa fa-arrow-right"></i>&nbsp;Guardar
+            </button>
+        </div>
+    </div>
+</fieldset>

@@ -1,0 +1,91 @@
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Cliente: {{finalName}}</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Formulario para editar un archivo de cliente
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form" name="generalFileForm" id="generalFileForm" data-ng-submit="generalFileSubmit()" autocomplete="off" novalidate>
+
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="form-group col-sm-12">
+                                            <label for="client" class="control-label">Cliente (*)</label>
+                                            <input class="form-control"  type="text"
+                                                   name="client" id="client"
+                                                   ng-model="finalName"
+                                                   ng-disabled="true">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-4" ng-class="{'has-error' : generalFileForm.submitted && generalFileForm.row.$invalid}">
+                                            <label for="row" class="control-label">Estante (*)</label>
+                                            <input class="form-control"  type="text"
+                                                   name="row" placeholder="Estante" id="row"
+                                                   data-ng-model="file.row"
+                                                   ng-required="true"
+                                                   ng-maxlength="4">
+                                            <ng-messages ng-show="generalFileForm.submitted" for="generalFileForm.row.$error">
+                                                <ng-message when="required"><label class="control-label" for="row">Valor requerido</label></ng-message>
+                                                <ng-message when="maxlength"><label class="control-label" for="row">M&aacute;ximo 4</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                        <div class="form-group col-sm-4" ng-class="{'has-error' : generalFileForm.submitted && generalFileForm.column.$invalid}">
+                                            <label for="column" class="control-label">Fila (*)</label>
+                                            <input class="form-control" placeholder="Fila" type="text"
+                                                   name="column" id="column"
+                                                   data-ng-model="file.column"
+                                                   ng-required="true"
+                                                   ng-maxlength="4">
+                                            <ng-messages ng-show="generalFileForm.submitted" for="generalFileForm.column.$error">
+                                                <ng-message when="required"><label class="control-label" for="column">Valor requerido</label></ng-message>
+                                                <ng-message when="maxlength"><label class="control-label" for="column">M&aacute;ximo 4</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                        <div class="form-group col-sm-4" ng-class="{'has-error' : generalFileForm.submitted && generalFileForm.status.$invalid}">
+                                            <label for="status" class="control-label">Estado (*)</label>
+                                            <select class="form-control"
+                                                    name="status" id="status"
+                                                    data-ng-model="file.status"
+                                                    ng-required="true"
+                                                    ng-options="s.description for s in statusTypes track by s.description">
+                                                <option ng-selected="true" value="">- Seleccionar -</option>
+                                            </select>
+                                            <ng-messages ng-show="generalFileForm.submitted" for="generalFileForm.status.$error">
+                                                <ng-message when="required"><label class="control-label" for="status">Valor requerido</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                            <a class="btn btn-default" ui-sref="antilavado.authenticated.generalFiles.list">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                            </a>
+                                            <button type="submit" class="btn btn-primary" ng-click="generalFileForm.submitted = true" ng-disabled="generalFileForm.submitDisabled">
+                                                <i class="fa fa-arrow-right"></i>&nbsp;Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-wrapper -->

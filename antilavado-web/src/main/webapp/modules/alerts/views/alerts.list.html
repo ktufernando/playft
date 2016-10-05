@@ -1,0 +1,71 @@
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Gesti&oacute;n de Alertas</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Listado de Alertas
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="order-column cell-border hover" cellspacing="0" width="100%" id="dataTables-configurations-levels">
+                            <thead>
+                            <tr>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                                <th>Cliente</th>
+                                <th>Estimaci&oacute;n L&iacute;mite</th>
+                                <th>Monto Operado</th>
+                                <th>Diferencia</th>
+                                <th>Nro Operaci&oacute;n</th>
+                                <!--th>Operaci&oacute;n Inusual</th-->
+                                <th>Reporte UIF</th>
+                                <th>Usuario Asignado</th>
+                                <th>Per&iacute;odo de An&aacute;lisis</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="a in alerts track by a.id">
+                                <td>
+                                    <div tooltip-placement="right" tooltip="Cerrada" data-ng-if="a.unusualOperation == 'CERRADA'" class="full-circle-green"></div>
+                                    <div tooltip-placement="right" tooltip="Asignada" data-ng-if="a.unusualOperation == 'ASIGNADA'" class="full-circle-yellow"></div>
+                                    <div tooltip-placement="right" tooltip="Sin Tratamiento" data-ng-if="a.unusualOperation == 'SIN TRATAMIENTO'" class="full-circle-red"></div>
+                                    <div tooltip-placement="right" tooltip="Sospechosa" data-ng-if="a.unusualOperation == 'SOSPECHOSA'" class="full-circle-black"></div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-xs"
+                                            ng-click="view(a)">
+                                        <i class="fa fa-eye"></i> Ver
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-xs" style="margin-top: 1px;"
+                                            ng-click="edit(a)">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </button>
+                                </td>
+                                <td>{{a | displayname}}</td>
+                                <td class="text-right">$ {{a.estimatedIncome | number:2}}</td>
+                                <td class="text-right">$ {{a.periodAmount | number:2}}</td>
+                                <td class="text-right">$ {{a.difference | number:2}}</td>
+                                <td class="text-right">{{a.id}}</td>
+                                <!--td>{{a.unusualOperation}}</td-->
+                                <td class="text-center">{{a.uifReport | date:'dd/MM/yyyy'}}</td>
+                                <td>{{a.userFirstName}} {{a.userLastName}}</td>
+                                <td>{{a.periodDescription}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-wrapper -->

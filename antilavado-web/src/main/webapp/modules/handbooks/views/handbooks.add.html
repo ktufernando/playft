@@ -1,0 +1,58 @@
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Nuevo Manual</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Formulario para agregar un nuevo manual
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form" name="handbookForm" id="handbookForm" data-ng-submit="handbookFormSubmit()" autocomplete="off" novalidate>
+
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="form-group col-sm-12" ng-class="{'has-error' : handbookForm.submitted && handbookForm.file.$invalid}">
+                                            <label for="file" class="control-label">Archivo (*)</label>
+                                            <input class="form-control" type="file"
+                                                   name="file" id="file"
+                                                   ngf-select ng-model="picFile"
+                                                   ngf-accept="'.doc, .docx, .pdf'"
+                                                   ngf-max-size="10MB"
+                                                   required
+                                                    >
+                                            <ng-messages ng-show="handbookForm.submitted" for="handbookForm.file.$error">
+                                                <ng-message when="required"><label class="control-label" for="file">Valor requerido</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                            <a class="btn btn-default" ui-sref="antilavado.authenticated.handbooks.list">
+                                                <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                            </a>
+                                            <button type="submit" class="btn btn-primary" ng-click="handbookForm.submitted = true" ng-disabled="handbookForm.submitDisabled">
+                                                <i class="fa fa-arrow-right"></i>&nbsp;Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-wrapper -->

@@ -1,0 +1,190 @@
+<div id="page-wrapper">
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Tablero de Informaci&oacute;n</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div data-ng-repeat="totalLevel in totalLevels track by totalLevel.level" class="col-lg-3 col-md-6">
+        <div class="panel" data-ng-style="{background: totalLevel.color}">
+            <div class="panel-heading" style="color: white">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-male fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{totalLevel.total}}</div>
+                        <div>{{totalLevel.level}}!</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer" data-ng-style="{color: totalLevel.color}" ng-click="toListClientByLevel(totalLevel.level)">
+                    <span class="pull-left">Ver Listado</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+<div class="row">
+<div class="col-lg-8">
+<!--<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-bar-chart-o fa-fw"></i> Cantidades de Clientes por Niveles de Riesgo
+    </div>
+    <div class="panel-body">
+        <div area-chart
+             area-data='morrisAreaConfig.data'
+             area-xkey='period'
+             area-ykeys='morrisAreaConfig.ykeys'
+             area-labels='morrisAreaConfig.labels'>
+        </div>
+    </div>
+</div-->
+<!-- /.panel -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-bar-chart-o fa-fw"></i> Alertas
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="morris-bar-chart"></div>
+                <div bar-chart
+                     bar-data='morrisBarConfig.data'
+                     bar-x='y' bar-y='morrisBarConfig.ykeys'
+                     bar-labels='morrisBarConfig.labels'
+                     bar-colors='morrisBarConfig.barColors'>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <a ui-sref="antilavado.authenticated.alerts.notreatment">
+            <div class="row">
+                <div class="col-lg-12">
+                <span class="pull-left">ALERTAS SIN TRATAMIENTO</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                </div>
+            </div>
+        </a>
+        <a ui-sref="antilavado.authenticated.alerts.assigned">
+            <div class="row">
+                <div class="col-lg-12">
+                <span class="pull-left">ALERTAS ASIGNADAS</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                </div>
+            </div>
+        </a>
+        <a ui-sref="antilavado.authenticated.alerts.suspicious">
+            <div class="row">
+                <div class="col-lg-12">
+                    <span class="pull-left">ALERTAS SOSPECHOSAS</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                </div>
+            </div>
+        </a>
+        <a ui-sref="antilavado.authenticated.alerts.closed">
+            <div class="row">
+                <div class="col-lg-12">
+                <span class="pull-left">ALERTAS CERRADAS</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                </div>
+            </div>
+        </a>
+        <div class="clearfix"></div>
+    </div>
+</div>
+</div>
+<!-- /.col-lg-8 -->
+<div class="col-lg-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bar-chart-o fa-fw"></i> Clientes en Riesgo
+        </div>
+        <div class="panel-body">
+            <div donut-chart donut-data='morrisDonutConfig.data' donut-colors='morrisDonutConfig.colors'></div>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-certificate fa-fw"></i> Licencia
+        </div>
+        <td class="panel-body">
+            <table class="table">
+            <tr>
+                <td>
+                    <label>Organizaci&oacute;n:</label>
+                </td>
+                <td class="text-right">
+                    <span>{{license.organization}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Fecha de Compra:</label>
+                </td>
+                <td class="text-right">
+                    <span>{{license.datePurchased}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Tipo de Licencia:</label>
+                </td>
+                <td class="text-right">
+                    <span>{{license.licenseType}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Limite de Usuarios:</label>
+                </td>
+                <td class="text-right">
+                    <span>{{license.userLimit}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Fecha de Compra:</label>
+                </td>
+                <td class="text-right">
+                    <span>{{license.datePurchased}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Mantenimiento:</label>
+                </td>
+                <td class="text-right">
+                    <span>{{license.maintenancePeriod}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Vencimiento:</label>
+                </td>
+                <td class="text-right">
+                    <span>{{license.licenseExpiration}}</span>
+                </td>
+            </tr>
+            </table>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+
+</div>
+<!-- /.col-lg-4 -->
+</div>
+<!-- /.row -->
+</div>
+<!-- /#page-wrapper -->

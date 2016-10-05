@@ -1,0 +1,61 @@
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Gesti&oacute;n de Clientes</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Clientes
+                    <a class="btn btn-primary btn-xs pull-right" ui-sref="antilavado.authenticated.createclient.stepone">
+                        <i class="fa fa-plus"></i> Crear Cliente
+                    </a>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="order-column cell-border hover" cellspacing="0" width="100%" id="dataTables-clients">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Nombre</th>
+                                <th>Raz&oacute;n Social</th>
+                                <th>Nro. Doc.</th>
+                                <th>Cuit / Cuil</th>
+                                <th>Nacionalidad</th>
+                                <th>Actividad</th>
+                                <th>Est. Mensual</th>
+                                <th>Riesgo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="client in clients track by client.id">
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-xs"
+                                            ng-click="edit($index)">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </button>
+                                </td>
+                                <td>{{client.names}} {{client.lastNames}}</td>
+                                <td>{{client.businessName}}</td>
+                                <td>{{client.documentNumber}}</td>
+                                <td>{{client.cuitCuil}}</td>
+                                <td>{{client.country}}</td>
+                                <td><div tooltip-placement="top" tooltip="{{client.activity}}">{{client.activity | truncate:15}}</div></td>
+                                <td>{{client.monthlyEstimate}}</td>
+                                <td>{{client.level | split:' ':1}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-wrapper -->

@@ -1,0 +1,463 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div data-ng-if="client.id">
+            <div data-ng-if="client.individual">
+                <h1 class="page-header">Cliente: {{client.names}} {{client.lastNames}}</h1>
+            </div>
+            <div data-ng-if="!client.individual">
+                <h1 class="page-header">Cliente: {{client.businessName}}</h1>
+            </div>
+        </div>
+        <div data-ng-if="!client.id">
+            <h1 class="page-header">Nuevo Cliente</h1>
+        </div>
+        <p>
+            <strong><span class="text-success">Detalles ></span></strong>
+            <strong><span class="text-muted">Domicilios</span></strong> >
+            <span class="text-muted">Tel&eacute;fonos</span> >
+            <span class="text-muted">Cuentas Bancarias</span>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+
+
+        <!-- ********* LIST ************ -->
+
+        <div class="panel panel-default" data-ng-if="stage == 'list'">
+            <div class="panel-heading">
+                Domicilios
+                <button type="button" class="btn btn-primary btn-xs pull-right" ng-click="add()">
+                    <i class="fa fa-plus"></i> Agregar Domicilio
+                </button>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table datatable="ng" class="order-column cell-border hover" cellspacing="0" width="100%" id="dataTables-step2">
+                        <thead>
+                        <tr>
+                            <th>Calle</th>
+                            <th>Altura</th>
+                            <th>Piso</th>
+                            <th>Depto</th>
+                            <th>CP</th>
+                            <th>Pa&iacute;s</th>
+                            <th>Provincia</th>
+                            <th>Localidad</th>
+                            <th>Partido</th>
+                            <th>Activo</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="d in client.domiciles">
+                            <td>{{d.street}}</td>
+                            <td>{{d.number}}</td>
+                            <td>{{d.floor}}</td>
+                            <td>{{d.department}}</td>
+                            <td>{{d.postalCode}}</td>
+                            <td>{{d.country.description}}</td>
+                            <td>{{d.province.description}}</td>
+                            <td>{{d.district.description}}</td>
+                            <td>{{d.locality.description}}</td>
+                            <td>{{d.active | yesno}}</td>
+                            <td>
+                                <button type="button" class="btn btn-warning btn-xs"
+                                   ng-click="edit($index)">
+                                    <i class="fa fa-edit"></i> Editar
+                                </button>&nbsp;
+                                <button type="button" class="btn btn-danger btn-xs" data-ng-if="!clientId"
+                                        ng-click="remove($index)">
+                                    <i class="fa fa-trash-o"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </br>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <fieldset>
+                            <div class="row">
+                                <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                    <button type="button" class="btn btn-default" ng-click="previous()">
+                                        <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                    </button>
+                                    <button type="button" class="btn btn-success" ng-click="next()">
+                                        <i class="fa fa-arrow-right"></i>&nbsp;Siguiente
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-primary" ng-click="save()" ng-disabled="submitDisabled"
+                                            data-ng-if="client.id">
+                                        <i class="fa fa-save"></i>&nbsp;Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ****** CREATE ******** -->
+        <div class="panel panel-default" data-ng-if="stage == 'add'">
+            <div class="panel-heading">
+                Nuevo Domicilio
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" name="addDomicileForm" id="addDomicileForm" data-ng-submit="confirmAdd()" autocomplete="off" novalidate ng-init="setFormScope(this)">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : addDomicileForm.submitted && addDomicileForm.country.$invalid}">
+                                        <label for="country" class="control-label">Pa&iacute;s (*)</label>
+                                        <select class="form-control"
+                                                name="country" id="country"
+                                                data-ng-model="domicile.country"
+                                                ng-required="true"
+                                                ng-change="countrySelected()"
+                                                ng-options="country.description for country in countries track by country.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="addDomicileForm.submitted" for="addDomicileForm.country.$error">
+                                            <ng-message when="required"><label class="control-label" for="country">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : addDomicileForm.submitted && addDomicileForm.province.$invalid}">
+                                        <label for="province" class="control-label">Provincia (*)</label>
+                                        <select class="form-control"
+                                                name="province" id="province"
+                                                data-ng-model="domicile.province"
+                                                ng-required="true"
+                                                ng-change="provinceSelected()"
+                                                ng-options="province.description for province in provinces track by province.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="addDomicileForm.submitted" for="addDomicileForm.province.$error">
+                                            <ng-message when="required"><label class="control-label" for="province">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : addDomicileForm.submitted && addDomicileForm.district.$invalid}">
+                                        <label for="district" class="control-label">Partido (*)</label>
+                                        <select class="form-control"
+                                                name="district" id="district"
+                                                data-ng-model="domicile.district"
+                                                ng-required="true"
+                                                ng-change="districtSelected()"
+                                                ng-options="district.description for district in districts track by district.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="addDomicileForm.submitted" for="addDomicileForm.district.$error">
+                                            <ng-message when="required"><label class="control-label" for="district">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : addDomicileForm.submitted && addDomicileForm.locality.$invalid}">
+                                        <label for="locality" class="control-label">Localidad (*)</label>
+                                        <select class="form-control"
+                                                name="locality" id="locality"
+                                                data-ng-model="domicile.locality"
+                                                ng-required="true"
+                                                ng-options="locality.description for locality in localities track by locality.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="addDomicileForm.submitted" for="addDomicileForm.locality.$error">
+                                            <ng-message when="required"><label class="control-label" for="locality">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : addDomicileForm.submitted && addDomicileForm.street.$invalid}">
+                                        <label for="street" class="control-label">Calle (*)</label>
+                                        <input class="form-control" placeholder="Calle" type="text"
+                                               name="street" id="street"
+                                               data-ng-model="domicile.street"
+                                               ng-required="true"
+                                               ng-minlength="2"
+                                               ng-maxlength="100">
+                                        <ng-messages ng-show="addDomicileForm.submitted" for="addDomicileForm.street.$error">
+                                            <ng-message when="required"><label class="control-label" for="street">Valor requerido</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="street">M&aacute;ximo 100 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="street">M&iacute;nimo 2 caracteres</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-2" ng-class="{'has-error' : addDomicileForm.submitted && addDomicileForm.number.$invalid}">
+                                        <label for="number" class="control-label">N&uacute;mero (*)</label>
+                                        <input class="form-control" placeholder="N&uacute;mero" type="text"
+                                               name="number" id="number"
+                                               data-ng-model="domicile.number"
+                                               ng-required="true"
+                                               ng-pattern="/^[0-9]+$/">
+                                        <ng-messages ng-show="addDomicileForm.submitted" for="addDomicileForm.number.$error">
+                                            <ng-message when="required"><label class="control-label" for="number">Valor requerido</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="number">Solo se permiten n&uacute;meros</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-2" ng-class="{'has-error' : addDomicileForm.submitted && addDomicileForm.floor.$invalid}">
+                                        <label for="floor" class="control-label">Piso</label>
+                                        <input class="form-control" placeholder="Piso" type="text"
+                                               name="floor" id="floor"
+                                               data-ng-model="domicile.floor"
+                                               ng-maxlength="2">
+                                        <ng-messages ng-show="addDomicileForm.submitted" for="addDomicileForm.floor.$error">
+                                            <ng-message when="maxlength"><label class="control-label" for="floor">M&aacute;ximo 2 caracteres</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-2" ng-class="{'has-error' : addDomicileForm.submitted && addDomicileForm.department.$invalid}">
+                                        <label for="department" class="control-label">Departamento</label>
+                                        <input class="form-control" placeholder="Departamento" type="text"
+                                               name="department" id="department"
+                                               data-ng-model="domicile.department"
+                                               ng-maxlength="4">
+                                        <ng-messages ng-show="addDomicileForm.submitted" for="addDomicileForm.department.$error">
+                                            <ng-message when="maxlength"><label class="control-label" for="department">M&aacute;ximo 4 caracteres</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-3" ng-class="{'has-error' : addDomicileForm.submitted && addDomicileForm.postalCode.$invalid}">
+                                        <label for="postalCode" class="control-label">C&oacute;digo Postal</label>
+                                        <input class="form-control" placeholder="C&oacute;digo Postal" type="text"
+                                               name="postalCode" id="postalCode"
+                                               data-ng-model="domicile.postalCode"
+                                               ng-maxlength="10">
+                                        <ng-messages ng-show="addDomicileForm.submitted" for="addDomicileForm.postalCode.$error">
+                                            <ng-message when="maxlength"><label class="control-label" for="postalCode">M&aacute;ximo 10 caracteres</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label for="realDomicile" class="control-label">Domicilio Real</label>
+                                        <select class="form-control"
+                                                name="realDomicile" id="realDomicile"
+                                                data-ng-model="domicile.realDomicile">
+                                            <option value="">- Seleccionar -</option>
+                                            <option value="true" ng-selected="{{domicile.realDomicile == 'true' || domicile.realDomicile == true}}">Si</option>
+                                            <option value="false" ng-selected="{{domicile.realDomicile == 'false' || domicile.realDomicile == false}}">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label for="legalDomicile" class="control-label">Domicilio Legal</label>
+                                        <select class="form-control"
+                                                name="legalDomicile" id="legalDomicile"
+                                                data-ng-model="domicile.legalDomicile">
+                                            <option value="">- Seleccionar -</option>
+                                            <option value="true" ng-selected="{{domicile.legalDomicile == 'true' || domicile.legalDomicile == true}}">Si</option>
+                                            <option value="false" ng-selected="{{domicile.legalDomicile == 'false' || domicile.legalDomicile == false}}">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label for="active" class="control-label">Activo</label>
+                                        <select class="form-control"
+                                                name="active" id="active"
+                                                data-ng-model="domicile.active"
+                                                ng-options="item.value as item.description for item in active">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                        <button type="button" class="btn btn-default" ng-click="list()">
+                                            <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" >
+                                            <i class="fa fa-save"></i>&nbsp;Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ****** CREATE ******** -->
+        <div class="panel panel-default" data-ng-if="stage == 'edit'">
+            <div class="panel-heading">
+                Edici&oacute;n de Domicilio
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" name="editDomicileForm" id="editDomicileForm" data-ng-submit="confirmEdit()" autocomplete="off" novalidate ng-init="setFormScope(this)">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : editDomicileForm.submitted && editDomicileForm.country.$invalid}">
+                                        <label for="country" class="control-label">Pa&iacute;s (*)</label>
+                                        <select class="form-control"
+                                                name="country" id="country"
+                                                data-ng-model="domicile.country"
+                                                ng-required="true"
+                                                ng-change="countrySelected()"
+                                                ng-options="country.description for country in countries track by country.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="editDomicileForm.submitted" for="editDomicileForm.country.$error">
+                                            <ng-message when="required"><label class="control-label" for="country">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : editDomicileForm.submitted && editDomicileForm.province.$invalid}">
+                                        <label for="province" class="control-label">Provincia (*)</label>
+                                        <select class="form-control"
+                                                name="province" id="province"
+                                                data-ng-model="domicile.province"
+                                                ng-required="true"
+                                                ng-change="provinceSelected()"
+                                                ng-options="province.description for province in provinces track by province.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="editDomicileForm.submitted" for="editDomicileForm.province.$error">
+                                            <ng-message when="required"><label class="control-label" for="province">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : editDomicileForm.submitted && editDomicileForm.district.$invalid}">
+                                        <label for="district" class="control-label">Partido (*)</label>
+                                        <select class="form-control"
+                                                name="district" id="district"
+                                                data-ng-model="domicile.district"
+                                                ng-required="true"
+                                                ng-change="districtSelected()"
+                                                ng-options="district.description for district in districts track by district.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="editDomicileForm.submitted" for="editDomicileForm.district.$error">
+                                            <ng-message when="required"><label class="control-label" for="district">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : editDomicileForm.submitted && editDomicileForm.locality.$invalid}">
+                                        <label for="locality" class="control-label">Localidad (*)</label>
+                                        <select class="form-control"
+                                                name="locality" id="locality"
+                                                data-ng-model="domicile.locality"
+                                                ng-required="true"
+                                                ng-options="locality.description for locality in localities track by locality.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="editDomicileForm.submitted" for="editDomicileForm.locality.$error">
+                                            <ng-message when="required"><label class="control-label" for="locality">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : editDomicileForm.submitted && editDomicileForm.street.$invalid}">
+                                        <label for="street" class="control-label">Calle (*)</label>
+                                        <input class="form-control" placeholder="Calle" type="text"
+                                               name="street" id="street"
+                                               data-ng-model="domicile.street"
+                                               ng-required="true"
+                                               ng-minlength="2"
+                                               ng-maxlength="100">
+                                        <ng-messages ng-show="editDomicileForm.submitted" for="editDomicileForm.street.$error">
+                                            <ng-message when="required"><label class="control-label" for="street">Valor requerido</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="street">M&aacute;ximo 100 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="street">M&iacute;nimo 2 caracteres</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-2" ng-class="{'has-error' : editDomicileForm.submitted && editDomicileForm.number.$invalid}">
+                                        <label for="number" class="control-label">N&uacute;mero (*)</label>
+                                        <input class="form-control" placeholder="N&uacute;mero" type="text"
+                                               name="number" id="number"
+                                               data-ng-model="domicile.number"
+                                               ng-required="true"
+                                               ng-pattern="/^[0-9]+$/">
+                                        <ng-messages ng-show="editDomicileForm.submitted" for="editDomicileForm.number.$error">
+                                            <ng-message when="required"><label class="control-label" for="number">Valor requerido</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="number">Solo se permiten n&uacute;meros</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-2" ng-class="{'has-error' : editDomicileForm.submitted && editDomicileForm.floor.$invalid}">
+                                        <label for="floor" class="control-label">Piso</label>
+                                        <input class="form-control" placeholder="Piso" type="text"
+                                               name="floor" id="floor"
+                                               data-ng-model="domicile.floor"
+                                               ng-maxlength="2">
+                                        <ng-messages ng-show="editDomicileForm.submitted" for="editDomicileForm.floor.$error">
+                                            <ng-message when="maxlength"><label class="control-label" for="floor">M&aacute;ximo 2 caracteres</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-2" ng-class="{'has-error' : editDomicileForm.submitted && editDomicileForm.department.$invalid}">
+                                        <label for="department" class="control-label">Departamento</label>
+                                        <input class="form-control" placeholder="Departamento" type="text"
+                                               name="department" id="department"
+                                               data-ng-model="domicile.department"
+                                               ng-maxlength="4">
+                                        <ng-messages ng-show="editDomicileForm.submitted" for="editDomicileForm.department.$error">
+                                            <ng-message when="maxlength"><label class="control-label" for="department">M&aacute;ximo 4 caracteres</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-3" ng-class="{'has-error' : editDomicileForm.submitted && editDomicileForm.postalCode.$invalid}">
+                                        <label for="postalCode" class="control-label">C&oacute;digo Postal</label>
+                                        <input class="form-control" placeholder="C&oacute;digo Postal" type="text"
+                                               name="postalCode" id="postalCode"
+                                               data-ng-model="domicile.postalCode"
+                                               ng-maxlength="10">
+                                        <ng-messages ng-show="editDomicileForm.submitted" for="editDomicileForm.postalCode.$error">
+                                            <ng-message when="maxlength"><label class="control-label" for="postalCode">M&aacute;ximo 10 caracteres</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label for="realDomicile" class="control-label">Domicilio Real</label>
+                                        <select class="form-control"
+                                                name="realDomicile" id="realDomicile"
+                                                data-ng-model="domicile.realDomicile">
+                                            <option value="">- Seleccionar -</option>
+                                            <option value="true" ng-selected="{{domicile.realDomicile == 'true' || domicile.realDomicile == true}}">Si</option>
+                                            <option value="false" ng-selected="{{domicile.realDomicile == 'false' || domicile.realDomicile == false}}">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label for="legalDomicile" class="control-label">Domicilio Legal</label>
+                                        <select class="form-control"
+                                                name="legalDomicile" id="legalDomicile"
+                                                data-ng-model="domicile.legalDomicile">
+                                            <option value="">- Seleccionar -</option>
+                                            <option value="true" ng-selected="{{domicile.legalDomicile == 'true' || domicile.legalDomicile == true}}">Si</option>
+                                            <option value="false" ng-selected="{{domicile.legalDomicile == 'false' || domicile.legalDomicile == false}}">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label for="active" class="control-label">Activo</label>
+                                        <select class="form-control"
+                                                name="active" id="active"
+                                                data-ng-model="domicile.active"
+                                                ng-options="item.value as item.description for item in active">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                        <button type="button" class="btn btn-default" ng-click="list()">
+                                            <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" >
+                                            <i class="fa fa-save"></i>&nbsp;Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

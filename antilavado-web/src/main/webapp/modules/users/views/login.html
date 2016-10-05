@@ -1,0 +1,45 @@
+<div growl></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Ingreso a la Aplicaci&oacute;n</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" name="loginForm" id="loginForm" data-ng-submit="signin()" autocomplete="off" novalidate>
+                        <fieldset>
+                            <div class="form-group" ng-class="{'has-error' : loginForm.submitted && loginForm.username.$invalid}">
+                                <ng-messages ng-show="loginForm.submitted" for="loginForm.username.$error">
+                                    <ng-message when="required"><label class="control-label" for="username">Valor requerido</label></ng-message>
+                                    <ng-message when="maxlength"><label class="control-label" for="username">M&aacute;ximo 50 caracteres</label></ng-message>
+                                    <ng-message when="minlength"><label class="control-label" for="username">M&iacute;nimo 4 caracteres</label></ng-message>
+                                </ng-messages>
+                                <input class="form-control" placeholder="Usuario" name="username" type="text" autofocus
+                                       name="username" id="username"
+                                       data-ng-model="login.username"
+                                       ng-required="true"
+                                       ng-minlength="4"
+                                       ng-maxlength="50">
+                            </div>
+                            <div class="form-group" ng-class="{'has-error' : loginForm.submitted && loginForm.password.$invalid}">
+                                <ng-messages ng-show="loginForm.submitted" for="loginForm.password.$error">
+                                    <ng-message when="required"><label class="control-label" for="password">Valor requerido</label></ng-message>
+                                    <ng-message when="maxlength"><label class="control-label" for="password">M&aacute;ximo 100 caracteres</label></ng-message>
+                                    <ng-message when="minlength"><label class="control-label" for="password">M&iacute;nimo 5 caracteres</label></ng-message>
+                                </ng-messages>
+                                <input class="form-control" placeholder="Contrase&ntilde;a" name="password" type="password"
+                                       name="password" id="password"
+                                       data-ng-model="login.password"
+                                       ng-required="true"
+                                       ng-minlength="5"
+                                       ng-maxlength="100">
+                            </div>
+                            <input type="submit" class="btn btn-lg btn-success btn-block" value="Aceptar" ng-disabled="loginForm.submitDisabled"/>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

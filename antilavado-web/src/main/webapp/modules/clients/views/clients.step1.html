@@ -1,0 +1,420 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div data-ng-if="client.id">
+            <div data-ng-if="client.individual">
+                <h1 class="page-header">Cliente: {{client.names}} {{client.lastNames}}</h1>
+            </div>
+            <div data-ng-if="!client.individual">
+                <h1 class="page-header">Cliente: {{client.businessName}}</h1>
+            </div>
+        </div>
+        <div data-ng-if="!client.id">
+            <h1 class="page-header">Nuevo Cliente</h1>
+        </div>
+        <p>
+            <strong><span class="text-muted">Detalles</span></strong> >
+            <span class="text-muted">Domicilios</span> >
+            <span class="text-muted">Tel&eacute;fonos</span> >
+            <span class="text-muted">Cuentas Bancarias</span>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Detalle del Cliente
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" name="clientDetailForm" id="clientDetailForm" data-ng-submit="clientDetailSubmit()" autocomplete="off" novalidate>
+                            <fieldset>
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.individual.$invalid}">
+                                        <label for="individual" class="control-label">Persona F&iacute;sica (*)</label>
+                                        <select class="form-control" autofocus
+                                                name="individual" id="individual"
+                                                data-ng-model="client.individual"
+                                                ng-required="true"
+                                                ng-options="item.value as item.description for item in sino">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.individual.$error">
+                                            <ng-message when="required"><label class="control-label" for="individual">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label for="specialClient" class="control-label">Cliente Especial</label>
+                                        <select class="form-control"
+                                                name="specialClient" id="specialClient"
+                                                data-ng-model="client.specialClient"
+                                                ng-options="s.description for s in specialClient | orderBy:'description' track by s.id">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div data-ng-if="client.individual == 'true' || client.individual == true">
+                                        <div class="form-group col-sm-6" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.names.$invalid}">
+                                            <label for="names" class="control-label">Nombres (*)</label>
+                                            <input class="form-control" placeholder="Nombres" type="text"
+                                                   name="names" id="names"
+                                                   data-ng-model="client.names"
+                                                   ng-required="true"
+                                                   ng-minlength="2"
+                                                   ng-maxlength="100"
+                                                   ng-pattern="/^[a-zA-Z\s]*$/">
+                                            <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.names.$error">
+                                                <ng-message when="required"><label class="control-label" for="names">Valor requerido</label></ng-message>
+                                                <ng-message when="maxlength"><label class="control-label" for="names">M&aacute;ximo 100 caracteres</label></ng-message>
+                                                <ng-message when="minlength"><label class="control-label" for="names">M&iacute;nimo 2 caracteres</label></ng-message>
+                                                <ng-message when="pattern"><label class="control-label" for="names">Solo se permiten letras</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                        <div class="form-group col-sm-6" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.lastNames.$invalid}">
+                                            <label for="lastNames" class="control-label">Apellidos (*)</label>
+                                            <input class="form-control" placeholder="Apellidos" type="text"
+                                                   name="lastNames" id="lastNames"
+                                                   data-ng-model="client.lastNames"
+                                                   ng-required="true"
+                                                   ng-minlength="2"
+                                                   ng-maxlength="100"
+                                                   ng-pattern="/^[a-zA-Z\s]*$/">
+                                            <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.lastNames.$error">
+                                                <ng-message when="required"><label class="control-label" for="lastNames">Valor requerido</label></ng-message>
+                                                <ng-message when="maxlength"><label class="control-label" for="lastNames">M&aacute;ximo 100 caracteres</label></ng-message>
+                                                <ng-message when="minlength"><label class="control-label" for="lastNames">M&iacute;nimo 2 caracteres</label></ng-message>
+                                                <ng-message when="pattern"><label class="control-label" for="lastNames">Solo se permiten letras</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div>
+                                    <div data-ng-if="client.individual == 'false' || client.individual == false">
+                                        <div class="form-group col-sm-12" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.businessName.$invalid}">
+                                            <label for="businessName" class="control-label">Raz&oacute;n Social (*)</label>
+                                            <input class="form-control" placeholder="Raz&oacute;n Social" type="text"
+                                                   name="businessName" id="businessName"
+                                                   data-ng-model="client.businessName"
+                                                   ng-required="true"
+                                                   ng-minlength="4"
+                                                   ng-maxlength="100">
+                                            <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.businessName.$error">
+                                                <ng-message when="required"><label class="control-label" for="businessName">Valor requerido</label></ng-message>
+                                                <ng-message when="maxlength"><label class="control-label" for="businessName">M&aacute;ximo 100 caracteres</label></ng-message>
+                                                <ng-message when="minlength"><label class="control-label" for="businessName">M&iacute;nimo 4 caracteres</label></ng-message>
+                                            </ng-messages>
+                                        </div>
+                                    </div></div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.birthday.$invalid}">
+                                        <label for="birthday" class="control-label">Fecha Nac - Insc (*)</label>
+                                        <p class="input-group">
+                                            <input class="form-control" placeholder="DD-MM-AAAA" type="text"
+                                                   name="birthday" id="birthday"
+                                                   datepicker-popup="dd-MM-yyyy"
+                                                   ng-model="client.birthday"
+                                                   is-open="birthday.opened"
+                                                   ng-required="true"
+                                                   current-text="Hoy" clear-text="Limpiar" close-text="Cerrar" />
+                                                  <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="birthday.opened = true"><i class="fa fa-calendar"></i></button>
+                                                  </span>
+                                        </p>
+                                        <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.birthday.$error">
+                                            <ng-message when="required"><label class="control-label" for="birthday">Valor requerido</label></ng-message>
+                                            <ng-message when="date"><label class="control-label" for="birthday">Fecha invalida</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.cuitcuil.$invalid}">
+                                        <label for="cuitcuil" class="control-label">CUIT/CUIL (*)</label>
+                                        <input class="form-control" placeholder="CUIT/CUIL" type="text"
+                                               name="cuitcuil" id="cuitcuil"
+                                               data-ng-model="client.cuitCuil"
+                                               ng-required="true"
+                                               ng-minlength="10"
+                                               ng-maxlength="25"
+                                               ng-pattern="/^[0-9]+$/"
+                                               cuit>
+                                        <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.cuitcuil.$error">
+                                            <ng-message when="required"><label class="control-label" for="cuitcuil">Valor requerido</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="cuitcuil">M&aacute;ximo 25 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="cuitcuil">M&iacute;nimo 10 caracteres</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="cuitcuil">Solo se permiten n&uacute;meros</label></ng-message>
+                                            <ng-message when="cuit"><label class="control-label" for="cuitcuil">CUIT/CUIL Invalido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+
+                                <div data-ng-if="client.individual == 'true' || client.individual == true">
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.documentType.$invalid}">
+                                        <label for="documentType" class="control-label">Tipo de Documento (*)</label>
+                                        <select class="form-control"
+                                                name="documentType" id="documentType"
+                                                data-ng-model="client.documentType"
+                                                ng-required="true"
+                                                ng-options="doc.description for doc in documentsType track by doc.description">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.documentType.$error">
+                                            <ng-message when="required"><label class="control-label" for="birthday">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.documentNumber.$invalid}">
+                                        <label for="documentNumber" class="control-label">N&uacute;mero de Documento (*)</label>
+                                        <input class="form-control" placeholder="N&uacute;mero de Documento" type="text"
+                                               name="documentNumber" id="documentNumber"
+                                               data-ng-model="client.documentNumber"
+                                               ng-required="true"
+                                               ng-minlength="7"
+                                               ng-maxlength="25"
+                                               ng-pattern="/^[0-9]+$/"
+                                               >
+                                        <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.cuitcuil.$error">
+                                            <ng-message when="required"><label class="control-label" for="cuitcuil">Valor requerido</label></ng-message>
+                                            <ng-message when="maxlength"><label class="control-label" for="cuitcuil">M&aacute;ximo 25 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="cuitcuil">M&iacute;nimo 7 caracteres</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="cuitcuil">Solo se permiten n&uacute;meros</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.country.$invalid}" data-ng-if="client.individual == 'true' || client.individual == true">
+                                        <label for="country" class="control-label">Zona Geogr&aacute;fica (*)</label>
+                                        <select class="form-control"
+                                                name="country" id="country"
+                                                data-ng-model="client.country"
+                                                ng-required="true"
+                                                ng-options="country.description for country in countries track by country.description">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.country.$error">
+                                            <ng-message when="required"><label class="control-label" for="country">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.societyType.$invalid}" data-ng-if="client.individual == 'false' || client.individual == false">
+                                        <label for="societyType" class="control-label">Tipo Sociedad (*)</label>
+                                        <select class="form-control"
+                                                name="societyType" id="societyType"
+                                                data-ng-model="client.societyType"
+                                                ng-required="true"
+                                                ng-options="societyType.description for societyType in societiesType track by societyType.description">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.societyType.$error">
+                                            <ng-message when="required"><label class="control-label" for="societyType">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.email.$invalid}">
+                                        <label for="email" class="control-label">E-Mail</label>
+                                        <input class="form-control" placeholder="E-Mail" type="email"
+                                               name="email" id="email"
+                                               data-ng-model="client.email"
+                                               ng-minlength="7"
+                                               ng-maxlength="50"
+                                               ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/">
+                                        <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.email.$error">
+                                            <ng-message when="maxlength"><label class="control-label" for="email">M&aacute;ximo 50 caracteres</label></ng-message>
+                                            <ng-message when="minlength"><label class="control-label" for="email">M&iacute;nimo 7 caracteres</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="email">E-Mail Inv&aacute;lido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+
+                                <div class="row"><div class="form-group col-sm-4">
+                                    <label for="nosis" class="control-label">Nosis</label>
+                                    <select class="form-control"
+                                            id="nosis"
+                                            data-ng-model="client.nosis"
+                                            ng-options="item.value as item.description for item in sino">
+                                        <option ng-selected="true" value="">- Seleccionar -</option>
+                                    </select>
+                                </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="worldsys" class="control-label">Worlsys</label>
+                                        <select class="form-control"
+                                                name="worldsys" id="worldsys"
+                                                data-ng-model="client.worldsys"
+                                                ng-options="item.value as item.description for item in sino">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="publicService" class="control-label">Servicio Publico</label>
+                                        <select class="form-control"
+                                                name="publicService" id="publicService"
+                                                data-ng-model="client.publicService"
+                                                ng-options="item.value as item.description for item in sino">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-4" data-ng-if="client.individual == 'true' || client.individual == true">
+                                        <label for="pep" class="control-label">PEP</label>
+                                        <select class="form-control"
+                                                name="pep" id="pep"
+                                                data-ng-model="client.pep"
+                                                ng-options="s.description for s in pep | orderBy:'description' track by s.id">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="affidavitHome" class="control-label">DDJJ Domicilio Real</label>
+                                        <select class="form-control"
+                                                name="affidavitHome" id="affidavitHome"
+                                                data-ng-model="client.affidavitHome"
+                                                ng-options="item.value as item.description for item in sino">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="afipConst" class="control-label">Const. AFIP</label>
+                                        <select class="form-control"
+                                                name="afipConst" id="afipConst"
+                                                data-ng-model="client.afipConst"
+                                                ng-options="item.value as item.description for item in sino">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row"><div class="form-group col-sm-4">
+                                    <label for="ros" class="control-label">ROS</label>
+                                    <select class="form-control"
+                                            name="ros" id="ros"
+                                            data-ng-model="client.ros"
+                                            ng-options="s.description for s in ros | orderBy:'description' track by s.id">
+                                        <option value="">- Seleccionar -</option>
+                                    </select>
+                                </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="lut" class="control-label">LUT</label>
+                                        <select class="form-control"
+                                                name="lut" id="lut"
+                                                data-ng-model="client.lut"
+                                                ng-options="s.description for s in lut | orderBy:'description' track by s.id">
+                                            <option value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="soi" class="control-label">SOI</label>
+                                        <select class="form-control"
+                                                name="soi" id="soi"
+                                                data-ng-model="client.soi"
+                                                ng-options="s.description for s in soi | orderBy:'description' track by s.id">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="form-group col-sm-6">
+                                        <label for="operationFrequency" class="control-label">Frecuencia de Operaci&oacute;n</label>
+                                        <select class="form-control"
+                                                name="operationFrequency" id="operationFrequency"
+                                                data-ng-model="client.operationFrequency"
+                                                ng-options="s.description for s in operationFrequency | orderBy:'description' track by s.id">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label for="marketExperience" class="control-label">Experiencia en el Mercado</label>
+                                        <select class="form-control"
+                                                name="marketExperience" id="marketExperience"
+                                                data-ng-model="client.marketExperience"
+                                                ng-options="s.description for s in marketExperience | orderBy:'description' track by s.id">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <h3>Actividades AFIP</h3>
+                                <div class="row">
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.activity1.$invalid}">
+                                        <label for="activity1" class="control-label">Actividad AFIP 1er Grado (*)</label>
+                                        <select class="form-control"
+                                                name="activity1" id="activity1"
+                                                data-ng-model="activities.degree1"
+                                                ng-required="true"
+                                                ng-change="afipActivityDegree1Selected()">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                            <option ng-selected="{{activity.code == client.afipActivity.substring(0, 1)}}"
+                                                    ng-repeat="activity in activities.degree1List"
+                                                    value="{{activity.code}}">
+                                                {{activity.description}}
+                                            </option>
+                                        </select>
+                                        <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.activity1.$error">
+                                            <ng-message when="required"><label class="control-label" for="activity1">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.activity2.$invalid}">
+                                        <label for="activity2" class="control-label">Actividad AFIP 2do Grado (*)</label>
+                                        <select class="form-control"
+                                                name="activity2" id="activity2"
+                                                data-ng-model="activities.degree2"
+                                                ng-required="true"
+                                                ng-change="afipActivityDegree2Selected()">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                            <option ng-selected="{{activity.code == client.afipActivity.substring(1, 4)}}"
+                                                    ng-repeat="activity in activities.degree2List"
+                                                    value="{{activity.code}}">
+                                                {{activity.description}}
+                                            </option>
+                                        </select>
+                                        <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.activity2.$error">
+                                            <ng-message when="required"><label class="control-label" for="activity2">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-4" ng-class="{'has-error' : clientDetailForm.submitted && clientDetailForm.activity3.$invalid}">
+                                        <label for="activity3" class="control-label">Actividad AFIP 3er Grado (*)</label>
+                                        <select class="form-control"
+                                                name="activity3" id="activity3"
+                                                data-ng-model="activities.degree3"
+                                                ng-required="true">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                            <option ng-selected="{{activity.code == client.afipActivity.substring(1)}}"
+                                                    ng-repeat="activity in activities.degree3List"
+                                                    value="{{activity.code}}">
+                                                {{activity.description}}
+                                            </option>
+                                        </select>
+                                        <ng-messages ng-show="clientDetailForm.submitted" for="clientDetailForm.activity3.$error">
+                                            <ng-message when="required"><label class="control-label" for="activity3">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                        <button type="button" class="btn btn-warning" ng-click="economicProfile()">
+                                            <i class="fa fa-money"></i>&nbsp;Perfil Econ&oacute;mico
+                                        </button>
+                                        &nbsp;
+                                        <a class="btn btn-default" ui-sref="antilavado.authenticated.clients">
+                                            <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                        </a>
+                                        <button type="submit" class="btn btn-success" ng-click="clientDetailForm.submitted = true">
+                                            <i class="fa fa-arrow-right"></i>&nbsp;Siguiente
+                                        </button>
+                                        &nbsp;
+                                        <button type="button" class="btn btn-primary" ng-click="save()" ng-disabled="submitDisabled"
+                                                data-ng-if="client.id">
+                                            <i class="fa fa-save"></i>&nbsp;Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

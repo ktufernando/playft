@@ -1,0 +1,14 @@
+<div ng-class="{'panel-warning' : type == 'warning' , 'panel-info' : type=='info'}">
+    <div class="modal-header panel-heading">
+        <h3 class="modal-title panel-title">
+            <i class="fa" ng-class="{'fa-warning' : type=='warning', 'fa-info':type=='info'}"></i>&nbsp;{{title}}
+        </h3>
+    </div>
+    <div class="modal-body">
+        <p ng-bind-html="message"></p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default btn-sm" type="button" ng-click="cancel()">Cancelar</button>
+        <button class="btn btn-primary btn-sm" type="button" ng-click="ok()">Aceptar</button>
+    </div>
+</div>

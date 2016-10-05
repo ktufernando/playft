@@ -1,0 +1,145 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div data-ng-if="client.id">
+            <div data-ng-if="client.individual">
+                <h1 class="page-header">Cliente: {{client.names}} {{client.lastNames}}</h1>
+            </div>
+            <div data-ng-if="!client.individual">
+                <h1 class="page-header">Cliente: {{client.businessName}}</h1>
+            </div>
+        </div>
+        <div data-ng-if="!client.id">
+            <h1 class="page-header">Nuevo Cliente</h1>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Perfil Econ&oacute;mico y Financiero
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" name="economicProfileForm" id="economicProfileForm" data-ng-submit="economicProfileSubmit()" autocomplete="off" novalidate>
+                            <fieldset>
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : economicProfileForm.submitted && economicProfileForm.fs.$invalid}">
+                                        <label for="fs" class="control-label">Situacion Fiscal (*)</label>
+                                        <select class="form-control"
+                                                name="fs" id="fs"
+                                                data-ng-model="client.economicFinancialProfile.fiscalSituation"
+                                                ng-required="true"
+                                                ng-options="m.description for m in fs | orderBy:'description' track by m.id">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="economicProfileForm.submitted" for="economicProfileForm.fs.$error">
+                                            <ng-message when="required"><label class="control-label" for="fs">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : economicProfileForm.submitted && economicProfileForm.mc.$invalid}" data-ng-if="client.economicFinancialProfile.fiscalSituation.id == 9">
+                                        <label for="mc" class="control-label">Categoria Monotributo</label>
+                                        <select class="form-control"
+                                                name="mc" id="mc"
+                                                data-ng-model="client.economicFinancialProfile.monotributoCategory"
+                                                ng-options="m.description for m in mc | orderBy:'description' track by m.id">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : economicProfileForm.submitted && economicProfileForm.mid.$invalid}">
+                                        <label for="mid" class="control-label">Ingresos Mensuales Declarados (*)</label>
+                                        <select class="form-control"
+                                                name="mid" id="mid"
+                                                data-ng-model="client.economicFinancialProfile.monthlyIncomeDeclared"
+                                                ng-required="true"
+                                                ng-options="m.description for m in mid | orderBy:'description' track by m.id">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="economicProfileForm.submitted" for="economicProfileForm.mid.$error">
+                                            <ng-message when="required"><label class="control-label" for="mid">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : economicProfileForm.submitted && economicProfileForm.mieecc.$invalid}" data-ng-if="client.economicFinancialProfile.monthlyIncomeDeclared != null && client.economicFinancialProfile.monthlyIncomeDeclared.id != 14">
+                                        <label for="mieecc" class="control-label">Ingresos Mensuales seg&uacute;n EECC (*)</label>
+                                        <select class="form-control"
+                                                name="mieecc" id="mieecc"
+                                                data-ng-model="client.economicFinancialProfile.monthlyIncomeAsEECC"
+                                                ng-required="true"
+                                                ng-options="m.description for m in mieecc | orderBy:'description' track by m.id">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="economicProfileForm.submitted" for="economicProfileForm.mieecc.$error">
+                                            <ng-message when="required"><label class="control-label" for="mieecc">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : economicProfileForm.submitted && economicProfileForm.middjj.$invalid}">
+                                        <label for="middjj" class="control-label">Ingresos Mensuales seg&uacute;n DDJJ (*)</label>
+                                        <select class="form-control"
+                                                name="middjj" id="middjj"
+                                                data-ng-model="client.economicFinancialProfile.monthlyIncomeAsDDJJ"
+                                                ng-required="true"
+                                                ng-options="m.description for m in middjj | orderBy:'description' track by m.id">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="economicProfileForm.submitted" for="economicProfileForm.middjj.$error">
+                                            <ng-message when="required"><label class="control-label" for="middjj">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error' : economicProfileForm.submitted && economicProfileForm.middjj2.$invalid}" data-ng-if="client.economicFinancialProfile.monthlyIncomeAsDDJJ != null">
+                                        <label for="middjj2" class="control-label">Ingresos Mensuales seg&uacute;n DDJJ (*)</label>
+                                        <select class="form-control"
+                                                name="middjj2" id="middjj2"
+                                                data-ng-model="client.economicFinancialProfile.monthlyIncomeAsDDJJ2"
+                                                ng-required="true"
+                                                ng-options="m.description for m in middjj2 | orderBy:'description' track by m.id">
+                                            <option ng-selected="true" value="">- Seleccionar -</option>
+                                        </select>
+                                        <ng-messages ng-show="economicProfileForm.submitted" for="economicProfileForm.middjj2.$error">
+                                            <ng-message when="required"><label class="control-label" for="mieecc">Valor requerido</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-4 col-sm-offset-4" ng-class="{'has-error' : economicProfileForm.submitted && economicProfileForm.monthlyEstimate.$invalid}">
+                                        <label for="monthlyEstimate" class="control-label">{{frequencyLabel}} (*)</label>
+                                        <div class="input-group monthly-estimate">
+                                        <span class="input-group-addon">$</span>
+                                            <input class="form-control text-right" placeholder="Perfil Econ&oacute;mico" type="text"
+                                                   name="monthlyEstimate" id="monthlyEstimate"
+                                                   data-ng-model="client.economicFinancialProfile.monthlyEstimate"
+                                                   ng-required="true"
+                                                   ng-pattern="/^[0-9]+$/">
+                                            <span class="input-group-addon">,00</span>
+                                        </div>
+
+                                        <ng-messages ng-show="economicProfileForm.submitted" for="economicProfileForm.monthlyEstimate.$error">
+                                            <ng-message when="required"><label class="control-label" for="monthlyEstimate">Valor requerido</label></ng-message>
+                                            <ng-message when="pattern"><label class="control-label" for="monthlyEstimate">Solo se permiten n&uacute;meros</label></ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+                                        <button type="button" class="btn btn-default" ng-click="previous()">
+                                            <i class="fa fa-arrow-left"></i>&nbsp;Atras
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" ng-click="next()">
+                                            <i class="fa fa-arrow-right"></i>&nbsp;Aceptar
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

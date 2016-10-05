@@ -1,0 +1,76 @@
+<fieldset>
+    <div class="row">
+        <div class="form-group col-sm-12" ng-class="{'has-error' : configurationLevelForm.submitted && configurationLevelForm.description.$invalid}">
+            <label for="description" class="control-label">Descripci&oacute;n (*)</label>
+            <input class="form-control" placeholder="Descripci&oacute;n" type="text"
+                   name="description" id="description"
+                   data-ng-model="level.description"
+                   ng-required="true"
+                   ng-minlength="2"
+                   ng-maxlength="150">
+            <ng-messages ng-show="configurationLevelForm.submitted" for="configurationLevelForm.description.$error">
+                <ng-message when="required"><label class="control-label" for="description">Valor requerido</label></ng-message>
+                <ng-message when="maxlength"><label class="control-label" for="description">M&aacute;ximo 150 caracteres</label></ng-message>
+                <ng-message when="minlength"><label class="control-label" for="description">M&iacute;nimo 2 caracteres</label></ng-message>
+            </ng-messages>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-4" ng-class="{'has-error' : configurationLevelForm.submitted && configurationLevelForm.color.$invalid}">
+            <label for="color" class="control-label">Color (*)</label>
+            <input class="form-control"  type="text"
+                   name="color" placeholder="#000000" id="color"
+                   data-ng-model="level.color"
+                   ng-required="true"
+                   ng-minlength="7"
+                   ng-maxlength="7"
+                   colorpicker="hex" colorpicker-with-input="true">
+            <ng-messages ng-show="configurationLevelForm.submitted" for="configurationLevelForm.color.$error">
+                <ng-message when="required"><label class="control-label" for="color">Valor requerido</label></ng-message>
+                <ng-message when="maxlength"><label class="control-label" for="color">M&aacute;ximo 7</label></ng-message>
+                <ng-message when="minlength"><label class="control-label" for="color">M&iacute;nimo 7</label></ng-message>
+            </ng-messages>
+        </div>
+        <div class="form-group col-sm-4" ng-class="{'has-error' : configurationLevelForm.submitted && configurationLevelForm.lowerBound.$invalid}">
+            <label for="lowerBound" class="control-label">Cota Inferior (*)</label>
+            <input class="form-control" placeholder="100.10" type="number"
+                   name="lowerBound" id="lowerBound"
+                   data-ng-model="level.lowerBound"
+                   ng-required="true"
+                   ng-max="9999999999"
+                   ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+            <ng-messages ng-show="configurationLevelForm.submitted" for="configurationLevelForm.lowerBound.$error">
+                <ng-message when="required"><label class="control-label" for="lowerBound">Valor requerido</label></ng-message>
+                <ng-message when="max"><label class="control-label" for="lowerBound">M&aacute;ximo 9999999999</label></ng-message>
+                <ng-message when="number"><label class="control-label" for="lowerBound">Solo se permiten n&uacute;meros</label></ng-message>
+                <ng-message when="pattern"><label class="control-label" for="lowerBound">Solo se permiten n&uacute;meros con 2 decimales</label></ng-message>
+            </ng-messages>
+        </div>
+        <div class="form-group col-sm-4" ng-class="{'has-error' : configurationLevelForm.submitted && configurationLevelForm.upperBound.$invalid}">
+            <label for="upperBound" class="control-label">Cota Superior (*)</label>
+            <input class="form-control" placeholder="100.10" type="number"
+                   name="upperBound" id="upperBound"
+                   data-ng-model="level.upperBound"
+                   ng-required="true"
+                   ng-max="9999999999"
+                   ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+            <ng-messages ng-show="configurationLevelForm.submitted" for="configurationLevelForm.upperBound.$error">
+                <ng-message when="required"><label class="control-label" for="upperBound">Valor requerido</label></ng-message>
+                <ng-message when="max"><label class="control-label" for="upperBound">M&aacute;ximo 9999999999</label></ng-message>
+                <ng-message when="number"><label class="control-label" for="upperBound">Solo se permiten n&uacute;meros</label></ng-message>
+                <ng-message when="pattern"><label class="control-label" for="upperBound">Solo se permiten n&uacute;meros con 2 decimales</label></ng-message>
+            </ng-messages>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-offset-2 col-sm-10 text-right">
+            <a class="btn btn-default" ui-sref="antilavado.authenticated.configuration.levels.list">
+                <i class="fa fa-arrow-left"></i>&nbsp;Atras
+            </a>
+            <button type="submit" class="btn btn-primary" ng-click="configurationLevelForm.submitted = true" ng-disabled="configurationLevelForm.submitDisabled">
+                <i class="fa fa-arrow-right"></i>&nbsp;Guardar
+            </button>
+        </div>
+    </div>
+</fieldset>

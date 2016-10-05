@@ -1,0 +1,181 @@
+<!--
+ index.html
+
+ PLAYFT.
+
+ Copyright (c) 2015 ****Fernando Valdes <fervaldes11@gmail.com>****
+
+ Created by ktufernando on 10/11/2015.
+-->
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gestión Antilavado de Dinero</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="icon" href="images/favicon.ico" type="image/vnd.microsoft.icon">
+
+    <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+    <link rel="stylesheet" href="css/vendor.css">
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="bower_components/DataTables/media/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="bower_components/morrisjs/morris.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-social/bootstrap-social.css" />
+    <link rel="stylesheet" href="bower_components/eeh-navigation/dist/eeh-navigation.css" />
+    <link rel="stylesheet" href="bower_components/morris.js/morris.css" />
+    <link rel="stylesheet" href="bower_components/angular-growl-v2/build/angular-growl.min.css" />
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.min.css" />
+    <link rel="stylesheet" href="bower_components/allmighty-autocomplete/style/autocomplete.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css({.tmp/serve,src}) styles/app.css -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/app.css">
+    <!-- endinject -->
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div ui-view></div>
+
+    <!-- build:js(src) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-i18n/angular-locale_es-ar.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-ui-utils/ui-utils.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
+    <script src="bower_components/respond/dest/respond.src.js"></script>
+    <!--script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script-->
+    <script src="bower_components/DataTables/media/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/raphael/raphael-min.js"></script>
+    <script src="bower_components/mocha/mocha.js"></script>
+    <script src="bower_components/morrisjs/morris.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.min.js"></script>
+    <script src="bower_components/eeh-navigation/dist/eeh-navigation.min.js"></script>
+    <script src="bower_components/eeh-navigation/dist/eeh-navigation.tpl.js"></script>
+    <script src="bower_components/flot/jquery.flot.js"></script>
+    <script src="bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+    <script src="bower_components/morris.js/morris.min.js"></script>
+    <script src="bower_components/angular-morris-chart/src/angular-morris-chart.min.js"></script>
+    <script src="bower_components/angular-growl-v2/build/angular-growl.min.js"></script>
+    <script src="bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
+    <script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js"></script>
+    <script src="bower_components/Chart.js/Chart.js"></script>
+    <script src="bower_components/allmighty-autocomplete/script/autocomplete.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+    <!-- inject:js -->
+
+    <script src="config.js"></script>
+    <script src="application.js"></script>
+
+    <script src="modules/license/config/license.routes.js"></script>
+    <script src="modules/license/services/license.service.js"></script>
+    <script src="modules/license/controllers/license.add.controller.js"></script>
+    <script src="modules/license/controllers/license.update.controller.js"></script>
+
+    <script src="modules/users/config/users.routes.js"></script>
+    <script src="modules/users/services/authentication.service.js"></script>
+    <script src="modules/users/services/users.service.js"></script>
+    <script src="modules/users/directives/users.directive.js"></script>
+    <script src="modules/users/controllers/login.controller.js"></script>
+    <script src="modules/users/controllers/users.list.controller.js"></script>
+    <script src="modules/users/controllers/users.create.controller.js"></script>
+    <script src="modules/users/controllers/users.edit.controller.js"></script>
+
+    <script src="modules/dashboard/config/dashboard.routes.js"></script>
+    <script src="modules/dashboard/services/dashboard.service.js"></script>
+    <script src="modules/dashboard/controllers/dashboard.controller.js"></script>
+
+    <script src="modules/clients/config/clients.routes.js"></script>
+    <script src="modules/clients/services/clients.service.js"></script>
+    <script src="modules/clients/directives/clients.directive.js"></script>
+    <script src="modules/clients/controllers/clients.list.controller.js"></script>
+    <script src="modules/clients/controllers/clients.create.step1.controller.js"></script>
+    <script src="modules/clients/controllers/clients.create.step2.controller.js"></script>
+    <script src="modules/clients/controllers/clients.create.step3.controller.js"></script>
+    <script src="modules/clients/controllers/clients.create.step4.controller.js"></script>
+    <script src="modules/clients/controllers/clients.create.step5.controller.js"></script>
+    <script src="modules/clients/controllers/clients.edit.step1.controller.js"></script>
+    <script src="modules/clients/controllers/clients.edit.step2.controller.js"></script>
+    <script src="modules/clients/controllers/clients.edit.step3.controller.js"></script>
+    <script src="modules/clients/controllers/clients.edit.step4.controller.js"></script>
+    <script src="modules/clients/controllers/clients.edit.step5.controller.js"></script>
+
+    <script src="modules/handbooks/config/handbooks.routes.js"></script>
+    <script src="modules/handbooks/services/handbooks.service.js"></script>
+    <script src="modules/handbooks/controllers/handbooks.list.controller.js"></script>
+    <script src="modules/handbooks/controllers/handbooks.add.controller.js"></script>
+
+    <script src="modules/configurations/config/configurations.routes.js"></script>
+    <script src="modules/configurations/services/configurations.service.js"></script>
+    <script src="modules/configurations/controllers/factors.list.controller.js"></script>
+    <script src="modules/configurations/controllers/levels.list.controller.js"></script>
+    <script src="modules/configurations/controllers/levels.add.controller.js"></script>
+    <script src="modules/configurations/controllers/levels.edit.controller.js"></script>
+    <script src="modules/configurations/controllers/levels.activations.controller.js"></script>
+    <!--<script src="modules/configurations/controllers/master.factor.add.controller.js"></script>-->
+    <script src="modules/configurations/controllers/master.factor.edit.controller.js"></script>
+    <script src="modules/configurations/controllers/detail.factor.edit.controller.js"></script>
+
+    <script src="modules/matrix/config/matrix.routes.js"></script>
+    <script src="modules/matrix/services/matrix.service.js"></script>
+    <script src="modules/matrix/controllers/clients.list.controller.js"></script>
+    <script src="modules/matrix/controllers/clientsByLevel.list.controller.js"></script>
+    <script src="modules/matrix/controllers/matrix.graph.controller.js"></script>
+
+    <script src="modules/files/general/config/generalFiles.routes.js"></script>
+    <script src="modules/files/general/services/generalFiles.service.js"></script>
+    <script src="modules/files/general/controllers/generalFiles.list.controller.js"></script>
+    <script src="modules/files/general/controllers/generalFiles.add.controller.js"></script>
+    <script src="modules/files/general/controllers/generalFiles.edit.controller.js"></script>
+    <script src="modules/files/general/controllers/client.digitalFiles.list.controller.js"></script>
+    <script src="modules/files/general/controllers/client.digitalFiles.add.controller.js"></script>
+
+    <script src="modules/files/movement/config/filesMovement.routes.js"></script>
+    <script src="modules/files/movement/services/fileMovement.service.js"></script>
+    <script src="modules/files/movement/controllers/fileMovement.list.controller.js"></script>
+    <script src="modules/files/movement/controllers/fileMovement.add.controller.js"></script>
+    <script src="modules/files/movement/controllers/fileMovement.edit.controller.js"></script>
+
+    <script src="modules/alerts/config/alerts.routes.js"></script>
+    <script src="modules/alerts/services/alerts.service.js"></script>
+    <script src="modules/alerts/controllers/alerts.list.controller.js"></script>
+    <script src="modules/alerts/controllers/alerts.edit.controller.js"></script>
+
+    <script src="modules/core/config/core.routes.js"></script>
+    <script src="modules/core/services/common.service.js"></script>
+    <script src="modules/core/services/popup.service.js"></script>
+    <script src="modules/core/controllers/modal.controller.js"></script>
+    <script src="modules/core/controllers/core.controller.js"></script>
+    <script src="modules/core/filters/core.filter.js"></script>
+
+    <!-- endinject -->
+
+    <!-- inject:partials -->
+    <!-- angular templates will be automatically converted in js and inserted here -->
+    <!-- endinject -->
+    <!-- endbuild -->
+
+  </body>
+</html>

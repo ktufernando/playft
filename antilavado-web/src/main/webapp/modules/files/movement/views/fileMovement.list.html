@@ -1,0 +1,60 @@
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Movimiento de Legajos</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Listado de Legajos
+                    <button type="button" class="btn btn-primary btn-xs pull-right" ng-click="add()">
+                        <i class="fa fa-plus"></i> Agregar Legajo
+                    </button>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="order-column cell-border hover" cellspacing="0" width="100%" id="dataTables-fileMovement">
+                            <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Fecha Pedido</th>
+                                <th>Fecha Envio</th>
+                                <th>Solicitante</th>
+                                <th>Fecha Devoluci&oacute;n</th>
+                                <th>Ubicaci&oacute;n</th>
+                                <th>Comentarios</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="file in files track by file.id">
+                                <td data-ng-if="file.client.individual">{{file.client.names}} {{file.client.lastNames}}</td>
+                                <td data-ng-if="!file.client.individual">{{file.client.businessName}}</td>
+                                <td>{{file.orderDate | date: 'dd-MM-yyyy'}}</td>
+                                <td>{{file.shippingDate | date: 'dd-MM-yyyy'}}</td>
+                                <td>{{file.applicant}}</td>
+                                <td>{{file.returnDate | date: 'dd-MM-yyyy'}}</td>
+                                <td>{{file.location}}</td>
+                                <td><span ng-click="showComment(file.comments)" style="cursor:pointer">{{file.comments | truncate:15}}</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-xs"
+                                            ng-click="edit(file)">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-wrapper -->
