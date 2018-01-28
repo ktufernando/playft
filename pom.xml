@@ -522,6 +522,7 @@
         <licensing-core.version>1.1.0</licensing-core.version>
     </properties>
     <modules>
+        <module>antilavado-license-generator</module>
         <module>antilavado-repository</module>
         <module>antilavado-service</module>
         <module>antilavado-security</module>
