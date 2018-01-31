@@ -41,7 +41,7 @@
 				
 				<!-- MYSQL -->
                 <db.mysql.driver>com.mysql.jdbc.Driver</db.mysql.driver>
-				<db.mysql.url>jdbc:mysql://localhost:3306/playft</db.mysql.url>
+		<db.mysql.url>jdbc:mysql://localhost:3306/playft</db.mysql.url>
                 <db.mysql.username>playft-usr</db.mysql.username>
                 <db.mysql.password>playft1234</db.mysql.password>
 				
@@ -66,7 +66,7 @@
                 <!-- Diario: 0 59 23 ? * * -->
                 <!-- Semanal: 0 59 23 ? * SUN -->
                 <!-- Mensual: 0 59 23 L * ?-->
-                <alerts.process.time>0 18 19 ? * *</alerts.process.time>
+                <alerts.process.time>0 59 23 ? * *</alerts.process.time>
 
                 <!-- Diario: DAILY -->
                 <!-- Semanal: WEEKLY -->
@@ -74,8 +74,8 @@
                 <alerts.process.frequency>WEEKLY</alerts.process.frequency>
             </properties>
         </profile>
-		<profile>
-            <id>dev</id>
+   	<profile>
+	    <id>dev</id>
             <properties>
                 <auth.encryption.enabled>true</auth.encryption.enabled>
                 <auth.encryption.seed>%DU)FöfI8/°</auth.encryption.seed>
@@ -174,6 +174,64 @@
                 <log4j.path>/var/lib/openshift/56fae0e97628e1059c00018d/app-root/data/tomcat8/logs/</log4j.path>
 
                 <alerts.process.time>0 59 23 ? * SUN</alerts.process.time>
+                <alerts.process.frequency>WEEKLY</alerts.process.frequency>
+            </properties>
+        </profile>
+	<profile>
+            <id>aws</id>
+            <properties>
+                <auth.encryption.enabled>true</auth.encryption.enabled>
+                <auth.encryption.seed>%DU)FöfI8/°</auth.encryption.seed>
+                <auth.session.maxAge>24h</auth.session.maxAge>
+
+                <db.selected>mysql</db.selected>
+		<db.initialSize>2</db.initialSize>
+                <db.maxActive>5</db.maxActive>
+				
+				<!-- ORACLE -->
+                <db.oracle.driver>oracle.jdbc.driver.OracleDriver</db.oracle.driver>
+                <db.oracle.url>jdbc:oracle:thin:@10.12.12.165:1521:XE</db.oracle.url>
+                <db.oracle.username></db.oracle.username>
+                <db.oracle.password></db.oracle.password>
+				
+				<!-- SQLSERVER -->
+                <db.sqlserver.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</db.sqlserver.driver>
+                <db.sqlserver.url>jdbc:sqlserver://10.12.12.9:1433;databaseName=Antilavado;sendStringParametersAsUnicode=false</db.sqlserver.url>
+                <db.sqlserver.username></db.sqlserver.username>
+                <db.sqlserver.password></db.sqlserver.password>
+				
+				<!-- MYSQL -->
+                <db.mysql.driver>com.mysql.jdbc.Driver</db.mysql.driver>
+		<db.mysql.url>jdbc:mysql://ec2-52-67-73-251.sa-east-1.compute.amazonaws.com:3306/playft</db.mysql.url>
+                <db.mysql.username>playft-usr</db.mysql.username>
+                <db.mysql.password>playft1234</db.mysql.password>
+				
+                <hibernate.oracle.dialect>org.hibernate.dialect.Oracle10gDialect</hibernate.oracle.dialect>
+                <hibernate.sqlserver.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.sqlserver.dialect>
+                <hibernate.mysql.dialect>org.hibernate.dialect.MySQLDialect</hibernate.mysql.dialect>
+                <hibernate.show_sql>true</hibernate.show_sql>
+                <hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
+                <entitymanager.packagesToScan>ar.com.jf.antilavado.repository.model</entitymanager.packagesToScan>
+
+                <ftp.host>localhost</ftp.host>
+                <ftp.port>22</ftp.port>
+                <ftp.username>playft</ftp.username>
+                <ftp.password>playft1234</ftp.password>
+                <ftp.handbook.path>/handbooks/</ftp.handbook.path>
+                <ftp.transactions.registration.path>/transactions/</ftp.transactions.registration.path>
+                <ftp.transactions.result.path>/transactions/results/</ftp.transactions.result.path>
+                <ftp.client.files.path>/digital_files/</ftp.client.files.path>
+
+                <log4j.path>/usr/share/tomcat8/logs/</log4j.path>
+
+                <!-- Diario: 0 59 23 ? * * -->
+                <!-- Semanal: 0 59 23 ? * SUN -->
+                <!-- Mensual: 0 59 23 L * ?-->
+                <alerts.process.time>0 59 23 ? * *</alerts.process.time>
+
+                <!-- Diario: DAILY -->
+                <!-- Semanal: WEEKLY -->
+                <!-- Mensual: MONTHLY -->
                 <alerts.process.frequency>WEEKLY</alerts.process.frequency>
             </properties>
         </profile>
