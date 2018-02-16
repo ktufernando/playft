@@ -57,7 +57,7 @@ public class MatrixServiceImpl implements MatrixService {
 
     @Override
     @Transactional(noRollbackFor = FactorHandlerException.class)
-    @Scheduled(cron = "0 00 00 ? * *")
+    @Scheduled(cron = "0 0 0 1 * ?")
     public void matrixForAllClients(){
         generateMatrixForAllClient(null);
     }

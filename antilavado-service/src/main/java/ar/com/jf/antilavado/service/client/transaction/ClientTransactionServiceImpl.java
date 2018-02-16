@@ -72,7 +72,7 @@ public class ClientTransactionServiceImpl implements ClientTransactionService {
 
     @Override
     @Transactional
-    @Scheduled(cron = "0 00 23 ? * *")
+    //@Scheduled(cron = "0 0 23 1 * ?")
     public void importTransactions() throws Exception {
 
         List<String> files = ftpService.listFiles(registrationPath);

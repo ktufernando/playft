@@ -227,12 +227,12 @@
                 <!-- Diario: 0 59 23 ? * * -->
                 <!-- Semanal: 0 59 23 ? * SUN -->
                 <!-- Mensual: 0 59 23 L * ?-->
-                <alerts.process.time>0 59 23 ? * *</alerts.process.time>
+                <alerts.process.time>0 59 23 1 * ?</alerts.process.time>
 
                 <!-- Diario: DAILY -->
                 <!-- Semanal: WEEKLY -->
                 <!-- Mensual: MONTHLY -->
-                <alerts.process.frequency>WEEKLY</alerts.process.frequency>
+                <alerts.process.frequency>MONTHLY</alerts.process.frequency>
             </properties>
         </profile>
         <profile>
